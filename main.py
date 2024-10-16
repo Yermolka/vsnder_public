@@ -6,8 +6,9 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv('db.env')
-
+secret_key = os.get
 app = Flask(__name__)
+app.secret_key = os.getenv('SECRET_KEY', 'aboba')
 
 def get_db_connection():
     try:
