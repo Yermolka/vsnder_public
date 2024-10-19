@@ -7,7 +7,7 @@ from utils.auth import auth
 @auth.login_required
 async def get_index():
     user = await get_user_by_username(auth.username())
-
+    
     return render_template("index.html", user_info=user)
 
 

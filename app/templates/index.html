@@ -12,115 +12,115 @@
     <div id="title">vsnder</div>
     <form method="POST">
         <label for="age">Возраст:</label>
-        <input type="number" id="age" name="age" value="{{ user_info[0] if user_info[0] is not none else '' }}" min="16" max="30" required>
+        <input type="number" id="age" name="age" value="{{ user_info['age'] if user_info['age'] is not none else '' }}" min="16" max="30" required>
         <br>
 
         <label for="family_opinion">Родовая ОП:</label>
         <select id="family_opinion" name="family_opinion">
             <option value=""></option>
-            <option value="Социология" {% if user_info[11] == 'Социология' %}selected{% endif %}>Социология</option>
-            <option value="Психология" {% if user_info[11] == 'Психология' %}selected{% endif %}>Психология</option>
-            <option value="ГМУ" {% if user_info[11] == 'ГМУ' %}selected{% endif %}>ГМУ</option>
-            <option value="Политология" {% if user_info[11] == 'Политология' %}selected{% endif %}>Политология</option>
+            <option value="Социология" {% if user_info["family_opinion"] == 'Социология' %}selected{% endif %}>Социология</option>
+            <option value="Психология" {% if user_info["family_opinion"] == 'Психология' %}selected{% endif %}>Психология</option>
+            <option value="ГМУ" {% if user_info["family_opinion"] == 'ГМУ' %}selected{% endif %}>ГМУ</option>
+            <option value="Политология" {% if user_info["family_opinion"] == 'Политология' %}selected{% endif %}>Политология</option>
         </select>
         <br>
 
         <label for="orientation">Ориентация:</label>
-        <textarea id="orientation" name="orientation" oninput="autoResizeTextarea(this)">{{ user_info[1] if user_info[1] is not none else '' }}</textarea>
+        <textarea id="orientation" name="orientation" oninput="autoResizeTextarea(this)">{{ user_info["orientation"] if user_info["orientation"] is not none else '' }}</textarea>
         <br>
 
         <label for="status">Статус:</label>
         <select id="status" name="status">
             <option value=""></option>
-            <option value="в отношениях" {% if user_info[9] == 'в отношениях' %}selected{% endif %}>в отношениях</option>
-            <option value="свободен" {% if user_info[9] == 'свободен' %}selected{% endif %}>свободен</option>
-            <option value="в активном поиске" {% if user_info[9] == 'в активном поиске' %}selected{% endif %}>в активном поиске</option>
-            <option value="схожу на свидание" {% if user_info[9] == 'схожу на свидание' %}selected{% endif %}>схожу на свидание</option>
-            <option value="без баб" {% if user_info[9] == 'без баб' %}selected{% endif %}>без баб</option>
+            <option value="в отношениях" {% if user_info["status"] == 'в отношениях' %}selected{% endif %}>в отношениях</option>
+            <option value="свободен" {% if user_info["status"] == 'свободен' %}selected{% endif %}>свободен</option>
+            <option value="в активном поиске" {% if user_info["status"] == 'в активном поиске' %}selected{% endif %}>в активном поиске</option>
+            <option value="схожу на свидание" {% if user_info["status"] == 'схожу на свидание' %}selected{% endif %}>схожу на свидание</option>
+            <option value="без баб" {% if user_info["status"] == 'без баб' %}selected{% endif %}>без баб</option>
         </select>
         <br>
 
         <label for="religion">Религия:</label>
         <select id="religion" name="religion">
             <option value=""></option>
-            <option value="christianity" {{ 'selected' if user_info[8] == 'christianity' else '' }}>Христианство</option>
-            <option value="islam" {{ 'selected' if user_info[8] == 'islam' else '' }}>Ислам</option>
-            <option value="hinduism" {{ 'selected' if user_info[8] == 'hinduism' else '' }}>Индуизм</option>
-            <option value="buddhism" {{ 'selected' if user_info[8] == 'buddhism' else '' }}>Буддизм</option>
-            <option value="judaism" {{ 'selected' if user_info[8] == 'judaism' else '' }}>Иудаизм</option>
-            <option value="sikhism" {{ 'selected' if user_info[8] == 'sikhism' else '' }}>Сикхизм</option>
-            <option value="atheism" {{ 'selected' if user_info[8] == 'atheism' else '' }}>Атеизм</option>
-            <option value="agnosticism" {{ 'selected' if user_info[8] == 'agnosticism' else '' }}>Агностицизм</option>
+            <option value="christianity" {{ 'selected' if user_info["religion"] == 'christianity' else '' }}>Христианство</option>
+            <option value="islam" {{ 'selected' if user_info["religion"] == 'islam' else '' }}>Ислам</option>
+            <option value="hinduism" {{ 'selected' if user_info["religion"] == 'hinduism' else '' }}>Индуизм</option>
+            <option value="buddhism" {{ 'selected' if user_info["religion"] == 'buddhism' else '' }}>Буддизм</option>
+            <option value="judaism" {{ 'selected' if user_info["religion"] == 'judaism' else '' }}>Иудаизм</option>
+            <option value="sikhism" {{ 'selected' if user_info["religion"] == 'sikhism' else '' }}>Сикхизм</option>
+            <option value="atheism" {{ 'selected' if user_info["religion"] == 'atheism' else '' }}>Атеизм</option>
+            <option value="agnosticism" {{ 'selected' if user_info["religion"] == 'agnosticism' else '' }}>Агностицизм</option>
         </select>
         <br>
 
         <label for="smoking">Отношение к курению:</label>
         <select id="smoking" name="smoking">
             <option value=""></option>
-            <option value="негативное" {% if user_info[14] == 'негативное' %}selected{% endif %}>негативное</option>
-            <option value="скорее негативное" {% if user_info[14] == 'скорее негативное' %}selected{% endif %}>скорее негативное</option>
-            <option value="нейтральное" {% if user_info[14] == 'нейтральное' %}selected{% endif %}>нейтральное</option>
-            <option value="скорее позитивное" {% if user_info[14] == 'скорее позитивное' %}selected{% endif %}>скорее позитивное</option>
-            <option value="позитивное" {% if user_info[14] == 'позитивное' %}selected{% endif %}>позитивное</option>
+            <option value="негативное" {% if user_info["smoking"] == 'негативное' %}selected{% endif %}>негативное</option>
+            <option value="скорее негативное" {% if user_info["smoking"] == 'скорее негативное' %}selected{% endif %}>скорее негативное</option>
+            <option value="нейтральное" {% if user_info["smoking"] == 'нейтральное' %}selected{% endif %}>нейтральное</option>
+            <option value="скорее позитивное" {% if user_info["smoking"] == 'скорее позитивное' %}selected{% endif %}>скорее позитивное</option>
+            <option value="позитивное" {% if user_info["smoking"] == 'позитивное' %}selected{% endif %}>позитивное</option>
         </select>
         <br>
 
         <label for="drinking">Отношение к алкоголю:</label>
         <select id="drinking" name="drinking">
             <option value=""></option>
-            <option value="негативное" {% if user_info[16] == 'негативное' %}selected{% endif %}>негативное</option>
-            <option value="скорее негативное" {% if user_info[16] == 'скорее негативное' %}selected{% endif %}>скорее негативное</option>
-            <option value="нейтральное" {% if user_info[16] == 'нейтральное' %}selected{% endif %}>нейтральное</option>
-            <option value="скорее позитивное" {% if user_info[16] == 'скорее позитивное' %}selected{% endif %}>скорее позитивное</option>
-            <option value="позитивное" {% if user_info[16] == 'позитивное' %}selected{% endif %}>позитивное</option>
+            <option value="негативное" {% if user_info["drinking"] == 'негативное' %}selected{% endif %}>негативное</option>
+            <option value="скорее негативное" {% if user_info["drinking"] == 'скорее негативное' %}selected{% endif %}>скорее негативное</option>
+            <option value="нейтральное" {% if user_info["drinking"] == 'нейтральное' %}selected{% endif %}>нейтральное</option>
+            <option value="скорее позитивное" {% if user_info["drinking"] == 'скорее позитивное' %}selected{% endif %}>скорее позитивное</option>
+            <option value="позитивное" {% if user_info["drinking"] == 'позитивное' %}selected{% endif %}>позитивное</option>
         </select>
         <br>
 
         <label for="interests">Интересы:</label>
-        <textarea id="interests" name="interests" oninput="autoResizeTextarea(this)">{{ user_info[2] if user_info[2] is not none else '' }}</textarea>
+        <textarea id="interests" name="interests" oninput="autoResizeTextarea(this)">{{ user_info["interests"] if user_info["interests"] is not none else '' }}</textarea>
         <br>
 
         <label for="vsn_interests">Интересы на ВСН:</label>
-        <textarea id="vsn_interests" name="vsn_interests" oninput="autoResizeTextarea(this)">{{ user_info[3] if user_info[3] is not none else '' }}</textarea>
+        <textarea id="vsn_interests" name="vsn_interests" oninput="autoResizeTextarea(this)">{{ user_info["vsn_interests"] if user_info["vsn_interests"] is not none else '' }}</textarea>
         <br>
 
         <label for="places_to_visit">Куда хочется сходить:</label>
-        <textarea id="places_to_visit" name="places_to_visit" oninput="autoResizeTextarea(this)">{{ user_info[4] if user_info[4] is not none else '' }}</textarea>
+        <textarea id="places_to_visit" name="places_to_visit" oninput="autoResizeTextarea(this)">{{ user_info["places_to_visit"] if user_info["places_to_visit"] is not none else '' }}</textarea>
         <br>
 
         <label for="study_places">Где любит ботать:</label>
-        <textarea id="study_places" name="study_places" oninput="autoResizeTextarea(this)">{{ user_info[5] if user_info[5] is not none else '' }}</textarea>
+        <textarea id="study_places" name="study_places" oninput="autoResizeTextarea(this)">{{ user_info["study_places"] if user_info["study_places"] is not none else '' }}</textarea>
         <br>
 
         <label for="music">Музыка:</label>
-        <textarea id="music" name="music" oninput="autoResizeTextarea(this)">{{ user_info[6] if user_info[6] is not none else '' }}</textarea>
+        <textarea id="music" name="music" oninput="autoResizeTextarea(this)">{{ user_info["music"] if user_info["music"] is not none else '' }}</textarea>
         <br>
 
         <label for="favorite_movies">Любимый фильм(ы):</label>
-        <textarea id="favorite_movies" name="favorite_movies" oninput="autoResizeTextarea(this)">{{ user_info[7] if user_info[7] is not none else '' }}</textarea>
+        <textarea id="favorite_movies" name="favorite_movies" oninput="autoResizeTextarea(this)">{{ user_info["favorite_movies"] if user_info["favorite_movies"] is not none else '' }}</textarea>
         <br>
 
 
         <label for="future_plans">Планы на будущее:</label>
-        <textarea id="future_plans" name="future_plans" oninput="autoResizeTextarea(this)">{{ user_info[10] if user_info[10] is not none else '' }}</textarea>
+        <textarea id="future_plans" name="future_plans" oninput="autoResizeTextarea(this)">{{ user_info["future_plans"] if user_info["future_plans"] is not none else '' }}</textarea>
         <br>
 
         <label for="favorite_programming_language">Любимый язык программирования:</label>
         <select id="favorite_programming_language" name="favorite_programming_language">
             <option value=""></option>
-            <option value="Python" {% if user_info[12] == 'Python' %}selected{% endif %}>Python</option>
-            <option value="C++" {% if user_info[12] == 'C++' %}selected{% endif %}>C++</option>
-            <option value="C" {% if user_info[12] == 'C' %}selected{% endif %}>C</option>
-            <option value="Assembler" {% if user_info[12] == 'Assembler' %}selected{% endif %}>Assembler</option>
-            <option value="SPSS" {% if user_info[12] == 'SPSS' %}selected{% endif %}>SPSS</option>
-            <option value="R" {% if user_info[12] == 'R' %}selected{% endif %}>R</option>
-            <option value="RUST" {% if user_info[12] == 'RUST' %}selected{% endif %}>RUST</option>
-            <option value="GO" {% if user_info[12] == 'GO' %}selected{% endif %}>GO</option>
+            <option value="Python" {% if user_info["favorite_programming_language"] == 'Python' %}selected{% endif %}>Python</option>
+            <option value="C++" {% if user_info["favorite_programming_language"] == 'C++' %}selected{% endif %}>C++</option>
+            <option value="C" {% if user_info["favorite_programming_language"] == 'C' %}selected{% endif %}>C</option>
+            <option value="Assembler" {% if user_info["favorite_programming_language"] == 'Assembler' %}selected{% endif %}>Assembler</option>
+            <option value="SPSS" {% if user_info["favorite_programming_language"] == 'SPSS' %}selected{% endif %}>SPSS</option>
+            <option value="R" {% if user_info["favorite_programming_language"] == 'R' %}selected{% endif %}>R</option>
+            <option value="RUST" {% if user_info["favorite_programming_language"] == 'RUST' %}selected{% endif %}>RUST</option>
+            <option value="GO" {% if user_info["favorite_programming_language"] == 'GO' %}selected{% endif %}>GO</option>
         </select>
         <br>
 
         <label for="top_3_people">Топ 3 людей:</label>
-        <textarea id="top_3_people" name="top_3_people" oninput="autoResizeTextarea(this)">{{ user_info[15] if user_info[15] is not none else '' }}</textarea>
+        <textarea id="top_3_people" name="top_3_people" oninput="autoResizeTextarea(this)">{{ user_info["top_3_people"] if user_info["top_3_people"] is not none else '' }}</textarea>
         <br>
 
         <button type="submit">Обновить</button>
