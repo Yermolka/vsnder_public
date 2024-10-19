@@ -1,0 +1,25 @@
+[project]
+name = "vsnder"
+version = "0.1.0"
+description = "Default template for PDM package"
+authors = [
+    {name = "Andrey Yermoshin", email = "ermoshin.andrey2@wb.ru"},
+]
+dependencies = [
+    "flask[async]>=3.0.3",
+    "Flask-HTTPAuth>=4.8.0",
+    "dotenv>=0.0.5",
+    "psycopg>=3.2.3",
+    "pandas>=2.2.3",
+    "python-dotenv>=1.0.1",
+]
+requires-python = "==3.12.*"
+readme = "README.md"
+license = {text = "No-License"}
+
+
+[tool.pdm]
+distribution = false
+
+[tool.pdm.scripts]
+server.cmd = "pdm run -g python app"
