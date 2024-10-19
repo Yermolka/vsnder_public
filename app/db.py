@@ -25,6 +25,9 @@ connection = get_db_connection()
 def get_db_cursor(name: str | None = None) -> Iterator[Cursor]:
     global connection
 
+    if connection.closed or connection.broken:
+        connection = get_db_connection()
+
     with connection.transaction(name):
         try:
             if name:

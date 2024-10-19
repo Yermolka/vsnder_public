@@ -22,4 +22,4 @@ license = {text = "No-License"}
 distribution = false
 
 [tool.pdm.scripts]
-server.cmd = "pdm run -g python app"
+server.cmd = "pdm run python app/."
