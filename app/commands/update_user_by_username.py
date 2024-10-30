@@ -2,6 +2,7 @@ from psycopg.rows import tuple_row
 from psycopg import Cursor
 from db import get_db_cursor
 from queries.get_user_by_username import _get_user_by_username
+from models.user import PutUserDto
 
 UPDATE_USER = """
 UPDATE users
@@ -27,20 +28,18 @@ WHERE username = %(username)s
 RETURNING "id";
 """
 
-#TODO: change data to put user dto!!
-async def update_user_by_username(username: str, data: dict) -> int:
-    with get_db_cursor() as cursor:
-        _user = await _get_user_by_username(cursor, username)
 
-        return await _update_user_by_username(cursor, username, data)
+async def update_user_by_username(dto: PutUserDto) -> int:
+    with get_db_cursor() as cursor:
+        _user = await _get_user_by_username(cursor, dto.username)
+
+        return await _update_user_by_username(cursor, dto)
         
 
-# pass user model, get username from it
-async def _update_user_by_username(cursor: Cursor, username: str, data: dict) -> int:
+async def _update_user_by_username(cursor: Cursor, dto: PutUserDto) -> int:
     cursor.row_factory = tuple_row
-    data["username"] = username
 
-    cursor.execute(UPDATE_USER, data)
+    cursor.execute(UPDATE_USER, dto.to_dict())
     result = cursor.fetchone()
     
     return result[0]

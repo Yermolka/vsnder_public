@@ -18,7 +18,6 @@ RETURNING users."id";
 """
 
 
-#TODO: change data to put user dto!!
 async def change_password_by_username(username: str, old_password: str, new_password: str) -> int:
     with get_db_cursor(change_password_by_username.__name__) as cursor:
         _user = await _get_user_by_username(username)

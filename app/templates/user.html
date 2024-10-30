@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="static/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+</head>
+<body>
+    <a href="{{ url_for('change_password') }}">Изменить пароль</a>
+    <a href="{{ url_for('index') }}">Редактировать себя</a>
+    <a href="{{ url_for('exhibition') }}">Посмотреть всех</a>
+
+    <div id="main">
+            {{ user.username }}<br>
+            {{ user.family_opinion if user.family_opinion is not None else "" }}<br>
+            {{ user.age if user.age is not None else "" }}<br>
+            {{ user.orientation if user.orientation is not None else "" }}<br>
+            {{ user.interests if user.interests is not None else "" }}<br>
+            {{ user.vsn_interests if user.vsn_interests is not None else "" }}<br>
+            {{ user.study_places if user.study_places is not None else "" }}<br>
+            {{ user.music if user.music is not None else "" }}<br>
+            {{ user.favorite_movies if user.favorite_movies is not None else "" }}<br>
+            {{ user.religion if user.religion is not None else "" }}<br>
+            {{ user.status if user.status is not None else "" }}<br>
+            {{ user.future_plans if user.future_plans is not None else "" }}<br>
+            {{ user.family_opinion if user.family_opinion is not None else "" }}<br>
+            {{ user.favorite_programming_language if user.favorite_programming_language is not None else "" }}<br>
+            {{ user.lizards_or_russians if user.lizards_or_russia is not None else "" }}<br>
+            {{ user.smoking if user.smoking is not None else "" }}<br>
+            {{ user.top_3_people if user.top_3_people is not None else "" }}<br>
+            {{ user.drinking if if user.drinking is not None else "" }}<br>
+    </div>
+</body>
+</html>
