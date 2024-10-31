@@ -6,6 +6,7 @@ class User:
     id: int
     username: str
     password: str | None = None
+    original_password: str | None = None
     age: int | None = None
     orientation: str | None = None
     interests: str | None = None
@@ -22,6 +23,7 @@ class User:
     smoking: str | None = None
     top_3_people: str | None = None
     drinking: str | None = None
+    places_to_visit: str | None = None
 
     @classmethod
     def from_dict(cls, data: dict) -> "User":

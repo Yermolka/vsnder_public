@@ -12,6 +12,7 @@ dependencies = [
     "psycopg>=3.2.3",
     "pandas>=2.2.3",
     "python-dotenv>=1.0.1",
+    "flask-session[cachelib]>=0.8.0",
 ]
 requires-python = "==3.12.*"
 readme = "README.md"
