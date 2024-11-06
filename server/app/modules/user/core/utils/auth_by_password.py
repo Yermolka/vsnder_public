@@ -6,7 +6,7 @@ from modules.user.core.queries.get_user_by_username import get_user_by_username
 async def auth_by_password(username: str, password: str) -> User:
     user = await get_user_by_username(username)
 
-    if not check_password_match(password, user.password_hash):
+    if not check_password_match(password, user.password):
         raise Exception("Incorrect password")
     
     return user

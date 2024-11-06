@@ -14,9 +14,9 @@ export function useColors() {
   const authLinkColor = theme.palette.mode === 'dark' ? theme.palette.grey.A400 : theme.palette.grey[600];
 
   const primaryAlphaColor = alphaColor(PRIMARY_COLOR, 0.9);
-  const secondaryAlphaColor = alphaColor(SECONDARY_COLOR, 0.9);
+  const secondaryAlphaColor = alphaColor(SECONDARY_COLOR, 0.1);
 
-  const primaryIconColor = primaryAlphaColor;
+  const primaryIconColor = SECONDARY_COLOR;
   const primaryIconTextColor = theme.palette.getContrastText(primaryIconColor);
 
   const secondaryIconColor = secondaryAlphaColor;

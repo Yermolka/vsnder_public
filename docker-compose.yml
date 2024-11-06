@@ -36,9 +36,20 @@ services:
 
   redis:
     image: "mirror.gcr.io/redis:7.0.9"
-    command: redis-server --save 60 1 --loglevel warning
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_USER=${REDIS_USERNAME}
     volumes:
       - redis-data:/data
+    command: >
+      sh -c '
+      mkdir -p /usr/local/etc/redis &&
+      echo "bind 0.0.0.0" > /usr/local/etc/redis/redis.conf &&
+      echo "requirepass $REDIS_PASSWORD" >> /usr/local/etc/redis/redis.conf &&
+      echo "user default on nopass ~* +@all" > /usr/local/etc/redis/users.acl &&
+      echo "user $REDIS_USER on >$REDIS_PASSWORD ~* +@all" >> /usr/local/etc/redis/users.acl &&
+      redis-server /usr/local/etc/redis/redis.conf --aclfile /usr/local/etc/redis/users.acl --save 60 1 --loglevel warning
+      '
 
 volumes:
   redis-data:

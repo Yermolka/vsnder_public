@@ -1,5 +1,3 @@
-import { Link as RouterLink } from 'react-router-dom';
-
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Avatar, Box, Button, Divider, Grid, Link, MenuItem, TextField, Typography } from '@mui/material';
 import { Form, Formik } from 'formik';
@@ -10,6 +8,7 @@ import { PasswordField } from '../../../../../../common/components/PasswordField
 import { useColors } from '../../../../../../common/hooks/useColors';
 
 import './LoginForm.scss';
+import { FOURTH_COLOR } from '../../../../../../common/consts/common';
 
 export interface LoginFormValues {
     username: string;
@@ -27,7 +26,7 @@ const validationSchema = yup.object({
 });
 
 export function LoginForm({ isLoading, onSubmit }: LoginFormProps) {
-    const { primaryIconColor, primaryIconTextColor, authLinkColor } = useColors();
+    const { primaryIconColor, primaryIconTextColor } = useColors();
 
     return (
         <Box className="login-form">
@@ -83,7 +82,7 @@ export function LoginForm({ isLoading, onSubmit }: LoginFormProps) {
                             <Grid item xs={12}>
                                 <Box className='login-form-submit'>
                                     <Button
-                                      color='primary'
+                                      color='secondary'
                                       data-cy='login-form-submit'
                                       disabled={isLoading}
                                       fullWidth

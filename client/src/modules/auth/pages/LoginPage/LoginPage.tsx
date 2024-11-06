@@ -6,7 +6,7 @@ import { Grid, Paper, useTheme } from '@mui/material';
 import { useAppDispatch, useAppSelector } from "../../../../common/redux/hooks";
 import { authActions, loginAction } from "../../redux/authSlice";
 import { LoginForm, LoginFormValues } from "./components/LoginForm/LoginForm";
-import { Provider } from "react-redux";
+import { PRIMARY_COLOR, SECONDARY_COLOR, THIRD_COLOR } from "../../../../common/consts/common";
 
 export function LoginPage() {
     const dispatch = useAppDispatch();
@@ -35,23 +35,20 @@ export function LoginPage() {
     };
 
     return (
-        <Grid container>
-            <Grid
-             item
-             lg={8}
-             md={6}
-             sm={4}
-             sx={{
-                backgroundRepeat: 'no-repeat',
-                backgroundColor: theme.palette.background.default,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-             }}
-             xs={false}
-            />
-            <Grid component={Paper} elevation={6} item lg={4} md={6} sm={8} square xs={12}>
-                <LoginForm isLoading={isLoading} onSubmit={onSubmit} />
-            </Grid>
+        <Grid 
+          container 
+          spacing={0} 
+          direction='column' 
+          justifyContent='center' 
+          component={Paper} 
+          elevation={6} 
+          sx={{
+            minHeight: '100vh',
+            backgroundColor: THIRD_COLOR,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}>
+            <LoginForm isLoading={isLoading} onSubmit={onSubmit} />
         </Grid>
     );
 }
