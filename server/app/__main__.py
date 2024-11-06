@@ -7,13 +7,17 @@ from common.consts import USER_SESSION_TIMEOUT, USER_SESSION_COOKIE_NAME
 from common.redis import redis as redis_client, close_redis, ping_redis
 
 from modules.user.http import user_routes
+from common.middlewares.debug import json_payload_logger
+from common.middlewares.error import common_errors
 
-middlewares = []
+middlewares = [
+    common_errors
+]
 
-environment = os.environ.get("app_env_type")
+environment = os.environ.get("app_env_type", "development")
 
-# if environment == "development":
-#     middlewares.append(json_payload_logger)
+if environment == "development":
+    middlewares.append(json_payload_logger)
 
 app = web.Application(logger=logger, middlewares=middlewares)
 
