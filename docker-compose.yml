@@ -1,0 +1,44 @@
+name: "vsnder"
+
+services:
+  proxy:
+    depends_on:
+      - client
+    build:
+      context: proxy
+      dockerfile: ./Dockerfile
+    ports:
+      - "80:80"
+      - "6379:6379"
+
+  client:
+    depends_on:
+      - server
+    build:
+      context: client
+      dockerfile: ./Dockerfile
+    volumes:
+      - ./client/src:/vsnder/client/src
+    
+  server:
+    depends_on:
+      - redis
+    build:
+      context: server
+      dockerfile: ./Dockerfile
+    volumes:
+      - ./server/app:/vsnder/server/app
+      - ./server/pyproject.toml:/vsnder/server/pyproject.toml
+    env_file:
+      - "./server/db.env"
+    ports:
+      - "35600:35600"
+
+  redis:
+    image: "mirror.gcr.io/redis:7.0.9"
+    command: redis-server --save 60 1 --loglevel warning
+    volumes:
+      - redis-data:/data
+
+volumes:
+  redis-data:

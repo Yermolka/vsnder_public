@@ -1,0 +1,32 @@
+import os
+from utils.logger import logger
+from aiohttp import web
+from aiohttp_session import setup as setup_session
+from aiohttp_session.redis_storage import RedisStorage
+from common.consts import USER_SESSION_TIMEOUT, USER_SESSION_COOKIE_NAME
+from common.redis import redis as redis_client, close_redis
+
+from modules.user.http import user_routes
+
+middlewares = []
+
+environment = os.environ.get("app_env_type")
+
+# if environment == "development":
+#     middlewares.append(json_payload_logger)
+
+app = web.Application(logger=logger, middlewares=middlewares)
+
+app.on_cleanup.append(close_redis)
+
+redis_storage = RedisStorage(redis_client.redis, cookie_name=USER_SESSION_COOKIE_NAME, max_age=USER_SESSION_TIMEOUT)
+setup_session(app, redis_storage)
+
+routes = user_routes
+
+app.add_routes(routes)
+
+if __name__ == "__main__":
+    logger.info("Server started")
+    
+    web.run_app(app, port=int(os.environ.get("SERVER_PORT", 3000)))
