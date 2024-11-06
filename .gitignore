@@ -164,3 +164,4 @@ cython_debug/
 
 src/
 *.env
+flask_session/

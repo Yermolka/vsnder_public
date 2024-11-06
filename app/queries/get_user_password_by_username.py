@@ -10,7 +10,6 @@ WHERE username = %(username)s;
 """
 
 
-#TODO: change data to put user dto!!
 async def get_user_password_by_username(username: str, password: str) -> int:
     with get_db_cursor(get_user_password_by_username.__name__) as cursor:
         _user = await _get_user_by_username(cursor, username)
