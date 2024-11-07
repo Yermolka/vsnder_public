@@ -1,4 +1,4 @@
-from aiohttp.web import Request, Response
+from aiohttp.web import Request, json_response
 from aiohttp_session import new_session
 from aiohttp.web_exceptions import HTTPUnauthorized
 
@@ -23,4 +23,4 @@ async def user_login_handler(request: Request):
     except Exception as e:
         raise HTTPUnauthorized(text=str(e))
 
-    return Response(status=201)
+    return json_response({"user_id": user.id})
