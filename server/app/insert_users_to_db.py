@@ -43,7 +43,6 @@ if __name__ == "__main__":
         password = row['Пароль']
         # insert(username, password, cursor)
         update(username, cursor)
-        break
 
     logger.info(f"Inserted {cursor.rowcount} users")
 
