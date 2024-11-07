@@ -17,6 +17,7 @@ dependencies = [
     "aiohttp-session>=2.12.1",
     "redis>=5.2.0",
     "mashumaro>=3.14",
+    "watchdog>=6.0.0",
 ]
 requires-python = "==3.12.*"
 readme = "README.md"
@@ -27,4 +28,8 @@ license = {text = "No-License"}
 distribution = false
 
 [tool.pdm.scripts]
+local.cmd = "pdm sync"
 server.cmd = "pdm run -g python app"
+server_dev.cmd = "pdm run -g python -Xfrozen_modules=off -u app"
+development.composite = ["local", "server_dev"]
+watch.cmd = "watchmedo auto-restart --directory='app' --patterns='*.py;*.yaml;*.toml' --recursive pdm run development"

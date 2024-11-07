@@ -10,4 +10,4 @@ RUN pip install --upgrade python-dotenv
 
 COPY . .
 
-CMD pdm run server
+CMD pdm run watch
