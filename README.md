@@ -1,4 +1,6 @@
 # vsnder
 
 ## Запуск
-- pdm run server
+- docker-compose up -d --build
+
+После запуска сервис будет доступен по http://localhost
