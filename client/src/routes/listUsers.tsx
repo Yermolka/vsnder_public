@@ -9,7 +9,7 @@ export function ListUsers() {
 
     return (
         <Box className="list-users">
-            <Grid2 container spacing={2} columns={6} justifyContent="center">
+            <Grid2 container direction="row" spacing={2} columns={{md: 12, xs: 6}} alignItems="stretch" justifyContent="center">
                 { users ? users.map((user) => UserFrame(user)) : null}
             </Grid2>
         </Box>
