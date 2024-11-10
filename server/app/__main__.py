@@ -3,7 +3,7 @@ from utils.logger import logger
 from aiohttp import web
 from aiohttp_session import setup as setup_session
 from aiohttp_session.redis_storage import RedisStorage
-from common.consts import USER_SESSION_TIMEOUT, USER_SESSION_COOKIE_NAME
+from common.consts import USER_SESSION_COOKIE_NAME
 from common.redis import redis as redis_client, close_redis, ping_redis
 
 from modules.user.http import user_routes
@@ -24,7 +24,7 @@ app = web.Application(logger=logger, middlewares=middlewares)
 app.on_startup.append(ping_redis)
 app.on_cleanup.append(close_redis)
 
-redis_storage = RedisStorage(redis_client.redis, cookie_name=USER_SESSION_COOKIE_NAME, max_age=USER_SESSION_TIMEOUT)
+redis_storage = RedisStorage(redis_client.redis, cookie_name=USER_SESSION_COOKIE_NAME)
 setup_session(app, redis_storage)
 
 routes = user_routes
