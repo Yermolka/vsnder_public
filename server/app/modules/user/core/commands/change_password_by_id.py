@@ -6,10 +6,10 @@ from modules.user.core.queries.get_user_by_id import _get_user_by_id
 from common.utils.auth import get_password_hash
 
 UPDATE_USER = """
-UPDATE users 
+UPDATE "user"
 SET 
-    password = %(password)s
-WHERE id = %(id)s
+    "password_hash" = %(password_hash)s
+WHERE "id" = %(id)s
 RETURNING "id";
 """
 
@@ -24,7 +24,7 @@ async def change_password_by_id(id: int, password: str) -> int:
 async def _change_password_by_id(cursor: Cursor, id: int, password: str) -> int:
     cursor.row_factory = tuple_row
 
-    cursor.execute(UPDATE_USER, dict(id=id, password=get_password_hash(password)))
+    cursor.execute(UPDATE_USER, dict(id=id, password_hash=get_password_hash(password)))
     result = cursor.fetchone()
 
     return result[0]

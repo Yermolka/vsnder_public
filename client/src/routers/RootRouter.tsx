@@ -21,7 +21,6 @@ export const RootRouter = () => {
                     {
                         path: 'login',
                         element: <LoginPage />,
-                        action: loginPageAction,
                     },
                     {
                         path: 'logout',
@@ -45,7 +44,6 @@ export const RootRouter = () => {
                     {
                         path: 'changePassword',
                         element: <ChangePassword />,
-                        action: changePasswordAction, 
                     }
                 ]
                 }

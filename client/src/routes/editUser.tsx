@@ -1,4 +1,4 @@
-import { redirect, useLoaderData } from "react-router-dom";
+import { redirect, useLoaderData, useNavigate } from "react-router-dom";
 import { getUser, postUser } from "../api/user";
 import { Formik, Form } from "formik";
 import { editUserValidationSchema } from "../utils/validation";
@@ -7,13 +7,21 @@ import { GetUserDto, PostUserDto, postUserFromGetUserDto } from "../dto/user";
 
 export default function EditUser() {
     const user = postUserFromGetUserDto(useLoaderData() as GetUserDto);
+    const navigate = useNavigate();
 
     return (
             <Formik
               initialValues={user}
               validationSchema={editUserValidationSchema}
               onSubmit={(values, { setSubmitting }) => {
-                editUserAction(values).catch(console.error);
+                editUserAction(values)
+                  .then(() => {
+                    navigate("/users");
+                  })
+                  .catch((err) => {
+                    console.error(err);
+                    navigate("/users");
+                  });
                 setSubmitting(false);
               }}>
                 {props =>
@@ -174,18 +182,24 @@ export default function EditUser() {
 }
 
 export async function editUserAction(params: PostUserDto) {
-    await postUser(params);
-    return redirect(`/`);
-    // return null;
+    const res = await postUser(params);
+    if (res.status === 200) {
+        return res.data;
+    }
+
+    return redirect("/users");
 }
 
-export async function editUserLoader({ params } : any) {
-    const user = await getUser(params.userId)
-    // const user = {
-    //     firstName: "Andrey",
-    //     lastName: "Yermol",
-    //     age: 12,
-    // }
+export async function editUserLoader() {
+    const userId = localStorage.getItem("userId");
+    if (userId === null) {
+        return redirect("/login");
+    }
 
-    return user;
+    const user = await getUser(parseInt(userId))
+    if (user.status === 200){
+        return user.data;
+    }
+
+    return redirect("/users");
 }

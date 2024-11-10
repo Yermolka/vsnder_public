@@ -1,37 +1,34 @@
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { GetUserDto } from "../dto/user";
 import { getUser } from "../api/user";
+import { useEffect } from "react";
+import { FullUserFrame } from "../components/FullUserFrame";
 
 export function SingleUser() {
     const user = useLoaderData() as GetUserDto | undefined;
-    const userId = localStorage.getItem("userId") as number | null;
+    const userId = localStorage.getItem("userId") as string | null;
     const navigate = useNavigate();
 
-    if (user && userId && user.id === userId) {
-        navigate('/edit');
-    }
+    useEffect(() => {
+        if (user && userId && user.id === parseInt(userId)) {
+            navigate('/edit');
+        }
+    }, [user, userId]) 
 
     return (
         <div>
-            <h1>Single User</h1>
-            {user ? user.firstName : "No user"}
+            {user ? (FullUserFrame(user)) : <h1>No user</h1>}
         </div>
     );
 }
 
-export async function singleUserLoader(params: any) {
-    const user = await getUser(params.userId)
-    // const user = {
-    //     firstName: "Max",
-    //     lastName: "Hass",
-    //     age: -1,
-    // }
-    // if (!user) {
-    //     throw new Response("", {
-    //         status: 404,
-    //         statusText: "Not Found",
-    //     });
-    // }
+export async function singleUserLoader({ params }: any) {
+    console.log(params);
 
-    return user;
+    const user = await getUser(params.userId)
+    if (user.status === 200) {
+        return user.data;
+    }
+
+    return null;
 }

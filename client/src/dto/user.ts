@@ -52,8 +52,8 @@ export interface UserChangePasswordDto {
 
 export interface GetUserDto {
     id: number;
-    firstName: string;
-    lastName: string;
+    first_name: string;
+    last_name: string;
     age?: number;
     orientation?: string;
     interests?: string;

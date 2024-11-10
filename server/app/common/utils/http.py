@@ -7,7 +7,7 @@ def get_int_path_param(request: Request, path_param_name: str, required=True) ->
         raw_param = request.match_info[path_param_name]
 
         if len(raw_param) > 5:
-            raise HTTPBadRequest(test=f"invalid param {path_param_name}")
+            raise HTTPBadRequest(text=f"invalid param {path_param_name}")
         
         return int(raw_param)
     except KeyError:

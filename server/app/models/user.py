@@ -1,12 +1,14 @@
 from dataclasses import dataclass
-
+from datetime import datetime
 
 @dataclass(kw_only=True)
 class User:
     id: int
     username: str
-    password: str | None = None
-    original_password: str | None = None
+    first_name: str
+    last_name: str
+    password_hash: str
+    original_password: str
     age: int | None = None
     orientation: str | None = None
     interests: str | None = None
@@ -24,6 +26,8 @@ class User:
     top_3_people: str | None = None
     drinking: str | None = None
     places_to_visit: str | None = None
+    created: datetime
+    modified: datetime
 
     @classmethod
     def from_dict(cls, data: dict) -> "User":
@@ -33,7 +37,10 @@ class User:
         return {
             "id": self.id,
             "username": self.username,
-            "password": self.password,
+            "original_password": self.original_password,
+            "password_hash": self.password_hash,
+            "first_name": self.first_name,
+            "last_name": self.last_name,
             "age": self.age,
             "orientation": self.orientation,
             "interests": self.interests,
@@ -50,4 +57,7 @@ class User:
             "smoking": self.smoking,
             "top_3_people": self.top_3_people,
             "drinking": self.drinking,
+            "places_to_visit": self.places_to_visit,
+            "created": self.created.timestamp(),
+            "modified": self.modified.timestamp(),
         }

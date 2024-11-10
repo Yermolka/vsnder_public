@@ -5,12 +5,12 @@ from models.user import User
 
 SELECT_USERS = """
 SELECT * 
-FROM users
-ORDER BY %(order_by)s;
+FROM "user"
+ORDER BY %(order_by)s DESC;
 """
 
 
-async def get_users(order_by: str = "username") -> User:
+async def get_users(order_by: str = "modified") -> User:
     with get_db_cursor(get_users.__name__) as cursor:
         return await _get_users(cursor, order_by)
 

@@ -5,9 +5,9 @@ from db import get_db_cursor
 from models.user import User
 
 SELECT_USER = """
-SELECT "password"
-FROM users
-WHERE id = %(id)s;
+SELECT "password_hash"
+FROM "user"
+WHERE "id" = %(id)s;
 """
 
 

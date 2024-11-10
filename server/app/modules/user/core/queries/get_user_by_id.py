@@ -6,8 +6,8 @@ from models.user import User
 
 SELECT_USER = """
 SELECT * 
-FROM users
-WHERE id = %(id)s;
+FROM "user"
+WHERE "id" = %(id)s;
 """
 
 

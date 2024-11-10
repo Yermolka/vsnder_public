@@ -7,7 +7,8 @@ from models.user import User
 @dataclass(kw_only=True)
 class GetUserDto(DtoBase):
     id: int
-    username: str
+    first_name: str
+    last_name: str
     age: int | None
     orientation: str
     interests: str
@@ -31,8 +32,9 @@ class GetUserDto(DtoBase):
     def from_model(cls, model: User) -> "GetUserDto":
         return cls(
             id=model.id,
-            username=model.username,
-            age=model.age,
+            first_name=model.first_name,
+            last_name=model.last_name,
+            age=model.age or None,
             orientation=model.orientation or "",
             interests=model.interests or "",
             vsn_interests=model.vsn_interests or "",
@@ -54,7 +56,7 @@ class GetUserDto(DtoBase):
 
 @dataclass(kw_only=True)
 class PostUserDto(DtoBase):
-    age: int
+    age: int | None = None
     orientation: str | None = None
     interests: str | None = None
     vsn_interests: str | None = None

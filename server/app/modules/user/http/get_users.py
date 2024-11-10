@@ -10,5 +10,5 @@ async def get_users_handler(_request: Request):
     users = await get_users()
 
     return json_response(
-        {"users": list(map(lambda u: GetUserDto.from_model(u).to_dict(), users))}
+        list(map(lambda u: GetUserDto.from_model(u).to_dict(), users))
     )

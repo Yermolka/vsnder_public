@@ -5,6 +5,7 @@ from .get_user import get_user_handler
 from .get_users import get_users_handler
 from .post_user import post_user_handler
 from .post_change_password import post_change_password_handler
+from .get_user_image import get_user_image_handler
 
 user_routes = [
     web.post("/api/user/login", user_login_handler),
@@ -13,4 +14,5 @@ user_routes = [
     web.get("/api/users", get_users_handler),
     web.post("/api/user/edit", post_user_handler),
     web.post("/api/user/change_password", post_change_password_handler),
+    web.get("/api/users/{user_id}/file", get_user_image_handler),
 ]
