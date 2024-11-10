@@ -8,8 +8,23 @@ from models.user import User
 class GetUserDto(DtoBase):
     id: int
     username: str
-    age: int
+    age: int | None
     orientation: str
+    interests: str
+    vsn_interests: str
+    places_to_visit: str
+    study_places: str
+    music: str
+    favorite_movies: str
+    religion: str
+    status: str
+    future_plans: str
+    family_opinion: str
+    favorite_programming_language: str
+    lizards_or_russians: bool = True
+    smoking: str
+    top_3_people: str
+    drinking: str
 
 
     @classmethod
@@ -19,6 +34,21 @@ class GetUserDto(DtoBase):
             username=model.username,
             age=model.age,
             orientation=model.orientation or "",
+            interests=model.interests or "",
+            vsn_interests=model.vsn_interests or "",
+            places_to_visit=model.places_to_visit or "",
+            study_places=model.study_places or "",
+            music=model.music or "",
+            favorite_movies=model.favorite_movies or "",
+            religion=model.religion or "",
+            status=model.status or "",
+            future_plans=model.future_plans or "",
+            family_opinion=model.family_opinion or "",
+            favorite_programming_language=model.favorite_programming_language or "",
+            lizards_or_russians=model.lizards_or_russians,
+            smoking=model.smoking or "",
+            top_3_people=model.top_3_people or "",
+            drinking=model.drinking or "",
         )
 
 

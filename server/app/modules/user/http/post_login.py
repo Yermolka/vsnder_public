@@ -23,4 +23,4 @@ async def user_login_handler(request: Request):
     except Exception as e:
         raise HTTPUnauthorized(text=str(e))
 
-    return json_response({"user_id": user.id})
+    return json_response({"userId": user.id})

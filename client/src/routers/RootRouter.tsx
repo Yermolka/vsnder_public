@@ -1,8 +1,12 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Root, { rootLoader } from "../routes/root";
+import Root from "../routes/root";
 import ErrorPage from "../error-page";
 import EditUser, { editUserAction, editUserLoader } from "../routes/editUser";
 import { SingleUser, singleUserLoader } from "../routes/singleUser";
+import { LoginPage, loginPageAction } from "../routes/loginPage";
+import { Logout } from "../routes/logout";
+import { ListUsers, listUsersLoader } from "../routes/listUsers";
+import { ChangePassword, changePasswordAction } from "../routes/changePassword";
 
 export const RootRouter = () => {
     const router = createBrowserRouter([
@@ -10,25 +14,40 @@ export const RootRouter = () => {
             path: '/',
             element: <Root />,
             errorElement: <ErrorPage />,
-            loader: rootLoader,
             children: [
-                // {
-                //     path: 'login',
-                //     // element: <LoginPage />,
-                // },
                 {
-                    path: 'user',
-                    element: <EditUser />,
-                    action: editUserAction,
-                    loader: editUserLoader,
-                },
-                {
-                    path: 'users',
-                },
-                {
-                    path: 'user/:userId',
-                    element: <SingleUser />,
-                    loader: singleUserLoader,
+                    errorElement: <ErrorPage />,
+                    children:[
+                    {
+                        path: 'login',
+                        element: <LoginPage />,
+                        action: loginPageAction,
+                    },
+                    {
+                        path: 'logout',
+                        element: <Logout />,
+                    },
+                    {
+                        path: 'edit',
+                        element: <EditUser />,
+                        loader: editUserLoader,
+                    },
+                    {
+                        path: 'users',
+                        element: <ListUsers />,
+                        loader: listUsersLoader,
+                    },
+                    {
+                        path: 'users/:userId',
+                        element: <SingleUser />,
+                        loader: singleUserLoader,
+                    },
+                    {
+                        path: 'changePassword',
+                        element: <ChangePassword />,
+                        action: changePasswordAction, 
+                    }
+                ]
                 }
             ],
         }
