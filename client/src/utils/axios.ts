@@ -18,6 +18,10 @@ axiosRetry(ax, {
 
         const axiosError = error as AxiosError;
 
+        if (axiosError.status && axiosError.status === 404) {
+            return false;
+        }
+
         if (!axiosError.response) {
             return true;
         }

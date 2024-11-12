@@ -18,6 +18,14 @@ export interface PostUserDto {
     drinking?: string;
 }
 
+export interface GetShortUserDto {
+    id: number;
+    first_name: string;
+    last_name: string;
+    orientation?: string;
+    year_of_study: number;
+}
+
 export function postUserFromGetUserDto(user: GetUserDto): PostUserDto {
     return {
         age: user.age || 0,
@@ -56,6 +64,7 @@ export interface GetUserDto {
     last_name: string;
     age?: number;
     orientation?: string;
+    year_of_study: number;
     interests?: string;
     vsn_interests?: string;
     places_to_visit?: string;

@@ -17,7 +17,9 @@ export async function postUserChangePassword(data: UserChangePasswordDto) {
     return await ax.post('/user/change_password', data);
 }
 
-export async function getUserProfilePicture(userId: number) {
-    return await ax.get(`/users/${userId}/file`)
-        .then(res => { return res.data; });
+export async function getHasUserProfilePicture(userId: number) {
+    const res = await ax.get(`/users/${userId}/file/has`)
+        .then(res => { return true; }, err => { return false; });
+
+    return res;
 }

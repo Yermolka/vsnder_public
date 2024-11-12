@@ -10,6 +10,7 @@ class User:
     password_hash: str
     original_password: str
     age: int | None = None
+    year_of_study: int
     orientation: str | None = None
     interests: str | None = None
     vsn_interests: str | None = None
@@ -42,6 +43,7 @@ class User:
             "first_name": self.first_name,
             "last_name": self.last_name,
             "age": self.age,
+            "year_of_study": self.year_of_study,
             "orientation": self.orientation,
             "interests": self.interests,
             "vsn_interests": self.vsn_interests,

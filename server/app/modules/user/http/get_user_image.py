@@ -1,4 +1,5 @@
-from aiohttp.web import Request, StreamResponse, Response
+from aiohttp.web import Request, StreamResponse
+from aiohttp.web_exceptions import HTTPNotFound
 
 from common.utils.auth import auth_guard
 from modules.user.core.queries.get_user_image_by_id import get_user_image_by_id
@@ -13,7 +14,7 @@ async def get_user_image_handler(request: Request):
     img = await get_user_image_by_id(user_id)
 
     if not img:
-        return Response()
+        return HTTPNotFound()
     
     data, media_type = img
     

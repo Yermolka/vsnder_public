@@ -1,5 +1,5 @@
 import { Avatar } from "@mui/material";
-import { getUserProfilePicture } from "../api/user";
+import { getHasUserProfilePicture } from "../api/user";
 import { useEffect, useState } from "react";
 
 export interface ProfilePictureProps {
@@ -8,11 +8,11 @@ export interface ProfilePictureProps {
 
 export function ProfilePicture({ userId }: ProfilePictureProps) {
     const [img, setImg] = useState<string | null>(null);
-
+    
     const fetchImg = async () => {
-        const res = await getUserProfilePicture(userId);
-        if (res !== null) {
-            setImg(res);
+        const res = await getHasUserProfilePicture(userId);
+        if (res) {
+            setImg(`/api/users/${userId}/file`);
         }
     };
 
@@ -22,7 +22,7 @@ export function ProfilePicture({ userId }: ProfilePictureProps) {
 
     return (
         <>
-            {img ? <img src={img} /> : <Avatar />}
+            {img ? <img src={img} width={64} height={64} /> : <Avatar sizes="64 64" />}
         </>
     )
 }

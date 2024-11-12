@@ -10,6 +10,7 @@ UPDATE_USER = """
 UPDATE "user"
 SET 
     "age" = %(age)s,
+    "year_of_study" = %(year_of_study)s,
     "orientation" = %(orientation)s,
     "interests" = %(interests)s,
     "vsn_interests" = %(vsn_interests)s,

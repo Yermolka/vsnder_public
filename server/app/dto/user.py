@@ -1,7 +1,27 @@
 from dto.base import DtoBase
 from dataclasses import dataclass
+from typing import Literal
 
 from models.user import User
+
+
+@dataclass(kw_only=True)
+class GetShortUserDto(DtoBase):
+    id: int
+    first_name: str
+    last_name: str
+    orientation: str
+    year_of_study: int
+
+    @classmethod
+    def from_model(cls, model: User) -> "GetShortUserDto":
+        return cls(
+            id=model.id,
+            first_name=model.first_name,
+            last_name=model.last_name,
+            orientation=model.orientation,
+            year_of_study=model.year_of_study,
+        )
 
 
 @dataclass(kw_only=True)
@@ -10,6 +30,7 @@ class GetUserDto(DtoBase):
     first_name: str
     last_name: str
     age: int | None
+    year_of_study: int
     orientation: str
     interests: str
     vsn_interests: str
@@ -27,7 +48,6 @@ class GetUserDto(DtoBase):
     top_3_people: str
     drinking: str
 
-
     @classmethod
     def from_model(cls, model: User) -> "GetUserDto":
         return cls(
@@ -35,6 +55,7 @@ class GetUserDto(DtoBase):
             first_name=model.first_name,
             last_name=model.last_name,
             age=model.age or None,
+            year_of_study=model.year_of_study,
             orientation=model.orientation or "",
             interests=model.interests or "",
             vsn_interests=model.vsn_interests or "",
@@ -57,7 +78,8 @@ class GetUserDto(DtoBase):
 @dataclass(kw_only=True)
 class PostUserDto(DtoBase):
     age: int | None = None
-    orientation: str | None = None
+    year_of_study: int
+    orientation: Literal["Социология", "Психология", "Политология", "ГМУ"] | None = None
     interests: str | None = None
     vsn_interests: str | None = None
     places_to_visit: str | None = None
@@ -70,6 +92,6 @@ class PostUserDto(DtoBase):
     family_opinion: str | None = None
     favorite_programming_language: str | None = None
     lizards_or_russians: bool = True
-    smoking: str | None = None
+    smoking: Literal["Положительно", "Отрицательно", "Нейтрально"] | None = None
     top_3_people: str | None = None
-    drinking: str | None = None
+    drinking: Literal["Положительно", "Отрицательно", "Нейтрально"] | None = None
