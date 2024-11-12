@@ -5,7 +5,7 @@ import EditUser, { editUserAction, editUserLoader } from "../routes/editUser";
 import { SingleUser, singleUserLoader } from "../routes/singleUser";
 import { LoginPage, loginPageAction } from "../routes/loginPage";
 import { Logout } from "../routes/logout";
-import { ListUsers, listUsersLoader } from "../routes/listUsers";
+import { ListUsers } from "../routes/listUsers";
 import { ChangePassword, changePasswordAction } from "../routes/changePassword";
 
 export const RootRouter = () => {
@@ -34,7 +34,6 @@ export const RootRouter = () => {
                     {
                         path: 'users',
                         element: <ListUsers />,
-                        loader: listUsersLoader,
                     },
                     {
                         path: 'users/:userId',

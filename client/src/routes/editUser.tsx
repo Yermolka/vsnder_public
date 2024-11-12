@@ -1,12 +1,13 @@
 import { redirect, useLoaderData, useNavigate } from "react-router-dom";
-import { getUser, postUser } from "../api/user";
+import { getUser, postUser, postUserImage } from "../api/user";
 import { Formik, Form } from "formik";
 import { editUserValidationSchema } from "../utils/validation";
-import { Button, Grid2, Paper, TextField } from "@mui/material";
+import { Button, Grid2, Input, MenuItem, Paper, Select, TextField } from "@mui/material";
 import { GetUserDto, PostUserDto, postUserFromGetUserDto } from "../dto/user";
 
 export default function EditUser() {
-    const user = postUserFromGetUserDto(useLoaderData() as GetUserDto);
+    const loaderData = useLoaderData() as GetUserDto;
+    const user = postUserFromGetUserDto(loaderData);
     const navigate = useNavigate();
 
     return (
@@ -26,6 +27,19 @@ export default function EditUser() {
             }}>
             {props =>
                 <Paper elevation={3} style={{ padding: "25px", margin: "10px" }}>
+                    <Form onSubmit={(event) => {
+                        postUserImage(loaderData.id, event);
+                        event.preventDefault();
+                        }}>
+                        <Grid2 container direction="row" alignItems="stretch" justifyItems="center" spacing={2} columns={2}>
+                            <Grid2 size={1}>
+                                <Input type="file" name="img" id="img" />
+                            </Grid2>
+                            <Grid2 size={1}>
+                                <Button variant="contained" type="submit" >Загрузить аватарку</Button>
+                            </Grid2>
+                        </Grid2>
+                    </Form>
                     <Form className="edit-user-form">
                         <Grid2 container spacing={2} columns={{ md: 6, xs: 3 }} alignItems="stretch" justifyContent="center">
                             <Grid2 size={3}>
@@ -38,22 +52,30 @@ export default function EditUser() {
                                     fullWidth />
                             </Grid2>
                             <Grid2 size={3}>
-                                <TextField
-                                    type="text"
-                                    name="orientation"
+                                <Select
                                     label="Программа"
+                                    name="orientation"
                                     value={props.values.orientation}
                                     onChange={props.handleChange}
-                                    fullWidth />
+                                    fullWidth>
+                                        <MenuItem value="Социология">Социология</MenuItem>
+                                        <MenuItem value="Психология">Психология</MenuItem>
+                                        <MenuItem value="Политология">Политология</MenuItem>
+                                        <MenuItem value="ГМУ">ГМУ</MenuItem>
+                                </Select>
                             </Grid2>
                             <Grid2 size={3}>
-                                <TextField
-                                    type="text"
-                                    name="year_of_study"
+                                <Select
                                     label="Курс"
+                                    name="year_of_study"
                                     value={props.values.year_of_study}
                                     onChange={props.handleChange}
-                                    fullWidth />
+                                    fullWidth>
+                                        <MenuItem value={1}>1</MenuItem>
+                                        <MenuItem value={2}>2</MenuItem>
+                                        <MenuItem value={3}>3</MenuItem>
+                                        <MenuItem value={4}>4</MenuItem>
+                                </Select>
                             </Grid2>
                             <Grid2 size={3}>
                                 <TextField
@@ -155,22 +177,28 @@ export default function EditUser() {
                                     fullWidth />
                             </Grid2>
                             <Grid2 size={3}>
-                                <TextField
-                                    type="text"
-                                    name="smoking"
+                                <Select
                                     label="Отношение к курению"
+                                    name="smoking"
                                     value={props.values.smoking}
                                     onChange={props.handleChange}
-                                    fullWidth />
+                                    fullWidth>
+                                        <MenuItem value="Нейтрально">Нейтрально</MenuItem>
+                                        <MenuItem value="Отрицательно">Отрицательно</MenuItem>
+                                        <MenuItem value="Положительно">Положительно</MenuItem>
+                                </Select>
                             </Grid2>
                             <Grid2 size={3}>
-                                <TextField
-                                    type="text"
-                                    name="drinking"
+                                <Select
                                     label="Отношение к алкоголю"
+                                    name="drinking"
                                     value={props.values.drinking}
                                     onChange={props.handleChange}
-                                    fullWidth />
+                                    fullWidth>
+                                        <MenuItem value="Нейтрально">Нейтрально</MenuItem>
+                                        <MenuItem value="Отрицательно">Отрицательно</MenuItem>
+                                        <MenuItem value="Положительно">Положительно</MenuItem>
+                                </Select>
                             </Grid2>
                             <Grid2 size={3}>
                                 <TextField

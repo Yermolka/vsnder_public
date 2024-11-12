@@ -1,9 +1,14 @@
 import { ax } from "../utils/axios";
 import { GetShortUserDto, GetUserDto, PostUserDto, UserChangePasswordDto } from "../dto/user"
+import { BaseSyntheticEvent } from "react";
 
-export async function getUsers(): Promise<Array<GetShortUserDto>> {
-    return await ax.get('/users')
-        .then(res => { return res.data as Array<GetShortUserDto>; }, err => { return []; });
+export async function getUsers(page: number, limit: number, orderBy: string): Promise<{ total: number, users: Array<GetShortUserDto> }> {
+    const url = `/users?page=${page}&limit=${limit}&orderBy=${orderBy}`;
+    return await ax.get(url)
+        .then(res => { 
+            const { total, users }: {total: number, users: Array<GetShortUserDto>} = res.data;
+            return { total, users};
+        }, err => { return { total: 0, users: [] }; });
 }
 
 export async function getUser(id: number): Promise<GetUserDto | null> {
@@ -24,6 +29,26 @@ export async function postUserChangePassword(data: UserChangePasswordDto) {
 export async function getHasUserProfilePicture(userId: number) {
     const res = await ax.get(`/users/${userId}/file/has`)
         .then(res => { return true; }, err => { return false; });
+
+    return res;
+}
+
+export async function postUserImage(userId: number, event: BaseSyntheticEvent) {
+    if (!event.target.files || event.target.files.length === 0) {
+        return null;
+    }
+
+    const userFile = event.target.files[0];
+    if (userFile === undefined || userFile === null) {
+        return null;
+    }
+
+    const data = new FormData();
+    console.log(userFile);
+    data.append("img", userFile[0]);
+    const res = await ax.post(`/users/${userId}/file`, data)
+        .then(console.log)
+        .catch(console.error);
 
     return res;
 }
