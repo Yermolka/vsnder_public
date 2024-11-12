@@ -17,14 +17,12 @@ export function ListUsers() {
     const [finished, setFinished] = useState(false);
 
     const loadMore = async () => {
-        console.log(`${page} ${loadedUsers.length}`)
         const {total, users } = await loader(page, "id");
         setLoadedUsers([...loadedUsers, ...users]);
         if (users.length === 0) {
             setFinished(true);
         }
         setPage(page + 1);
-        console.log(loadedUsers);
     };
 
     useEffect(() => {

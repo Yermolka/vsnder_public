@@ -50,7 +50,6 @@ async def post_user_image_handler(request: Request):
         await set_user_image_by_user_id(user_id, img_bytes.getvalue(), media_type)
     
     except Exception as e:
-        raise e
         raise HTTPBadRequest(reason=str(e))
 
     return json_response(data={"user_id": user_id})

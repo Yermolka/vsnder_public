@@ -4,11 +4,25 @@ import { Formik, Form } from "formik";
 import { editUserValidationSchema } from "../utils/validation";
 import { Button, Grid2, Input, MenuItem, Paper, Select, TextField } from "@mui/material";
 import { GetUserDto, PostUserDto, postUserFromGetUserDto } from "../dto/user";
+import { Form as ReactForm } from "react-router-dom";
+import { ChangeEvent, useState } from "react";
 
 export default function EditUser() {
     const loaderData = useLoaderData() as GetUserDto;
     const user = postUserFromGetUserDto(loaderData);
     const navigate = useNavigate();
+    const [file, setFile] = useState<File | null>(null);
+
+    const handleFile = (file: File) => {
+        if (!file) return;
+
+        setFile(file);
+    }
+    const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+        if (event.target.files && event.target.files.length > 0) {
+            handleFile(event.target.files[0]);
+        }
+    }
 
     return (
         <Formik
@@ -27,19 +41,19 @@ export default function EditUser() {
             }}>
             {props =>
                 <Paper elevation={3} style={{ padding: "25px", margin: "10px" }}>
-                    <Form onSubmit={(event) => {
-                        postUserImage(loaderData.id, event);
+                    <ReactForm onSubmit={(event) => {
+                        postUserImage(loaderData.id, file).then(value => console.log(value));
                         event.preventDefault();
-                        }}>
+                    }}>
                         <Grid2 container direction="row" alignItems="stretch" justifyItems="center" spacing={2} columns={2}>
                             <Grid2 size={1}>
-                                <Input type="file" name="img" id="img" />
+                                <Input type="file" name="img" id="img" onChange={handleFileChange} />
                             </Grid2>
                             <Grid2 size={1}>
                                 <Button variant="contained" type="submit" >Загрузить аватарку</Button>
                             </Grid2>
                         </Grid2>
-                    </Form>
+                    </ReactForm>
                     <Form className="edit-user-form">
                         <Grid2 container spacing={2} columns={{ md: 6, xs: 3 }} alignItems="stretch" justifyContent="center">
                             <Grid2 size={3}>
@@ -58,10 +72,10 @@ export default function EditUser() {
                                     value={props.values.orientation}
                                     onChange={props.handleChange}
                                     fullWidth>
-                                        <MenuItem value="Социология">Социология</MenuItem>
-                                        <MenuItem value="Психология">Психология</MenuItem>
-                                        <MenuItem value="Политология">Политология</MenuItem>
-                                        <MenuItem value="ГМУ">ГМУ</MenuItem>
+                                    <MenuItem value="Социология">Социология</MenuItem>
+                                    <MenuItem value="Психология">Психология</MenuItem>
+                                    <MenuItem value="Политология">Политология</MenuItem>
+                                    <MenuItem value="ГМУ">ГМУ</MenuItem>
                                 </Select>
                             </Grid2>
                             <Grid2 size={3}>
@@ -71,10 +85,10 @@ export default function EditUser() {
                                     value={props.values.year_of_study}
                                     onChange={props.handleChange}
                                     fullWidth>
-                                        <MenuItem value={1}>1</MenuItem>
-                                        <MenuItem value={2}>2</MenuItem>
-                                        <MenuItem value={3}>3</MenuItem>
-                                        <MenuItem value={4}>4</MenuItem>
+                                    <MenuItem value={1}>1</MenuItem>
+                                    <MenuItem value={2}>2</MenuItem>
+                                    <MenuItem value={3}>3</MenuItem>
+                                    <MenuItem value={4}>4</MenuItem>
                                 </Select>
                             </Grid2>
                             <Grid2 size={3}>
@@ -183,9 +197,9 @@ export default function EditUser() {
                                     value={props.values.smoking}
                                     onChange={props.handleChange}
                                     fullWidth>
-                                        <MenuItem value="Нейтрально">Нейтрально</MenuItem>
-                                        <MenuItem value="Отрицательно">Отрицательно</MenuItem>
-                                        <MenuItem value="Положительно">Положительно</MenuItem>
+                                    <MenuItem value="Нейтрально">Нейтрально</MenuItem>
+                                    <MenuItem value="Отрицательно">Отрицательно</MenuItem>
+                                    <MenuItem value="Положительно">Положительно</MenuItem>
                                 </Select>
                             </Grid2>
                             <Grid2 size={3}>
@@ -195,9 +209,9 @@ export default function EditUser() {
                                     value={props.values.drinking}
                                     onChange={props.handleChange}
                                     fullWidth>
-                                        <MenuItem value="Нейтрально">Нейтрально</MenuItem>
-                                        <MenuItem value="Отрицательно">Отрицательно</MenuItem>
-                                        <MenuItem value="Положительно">Положительно</MenuItem>
+                                    <MenuItem value="Нейтрально">Нейтрально</MenuItem>
+                                    <MenuItem value="Отрицательно">Отрицательно</MenuItem>
+                                    <MenuItem value="Положительно">Положительно</MenuItem>
                                 </Select>
                             </Grid2>
                             <Grid2 size={3}>

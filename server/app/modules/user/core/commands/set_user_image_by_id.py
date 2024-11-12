@@ -24,6 +24,14 @@ FROM "file"
 WHERE "user_id" = %(user_id)s;
 """
 
+UPDATE_USER_HAS_AVATAR = """
+UPDATE "user" SET
+    "has_avatar" = TRUE
+WHERE "id" = %(user_id)s
+RETURNING "id";
+"""
+
+
 async def set_user_image_by_user_id(user_id: int, image: bytes, media_type: str):
     with get_db_cursor() as cursor:
         _user = await _get_user_by_id(cursor, user_id)
@@ -44,4 +52,9 @@ async def _set_user_image_by_user_id(cursor: Cursor, user_id: int, image: bytes,
         cursor.execute(UPDATE_USER_IMAGE, dict(user_id=user_id, image=image, media_type=media_type))
         result = cursor.fetchone()
 
-    return result[0]
+    file_id = result[0]
+
+    if result:
+        cursor.execute(UPDATE_USER_HAS_AVATAR, dict(user_id=user_id))
+
+    return file_id

@@ -29,6 +29,7 @@ class User:
     places_to_visit: str | None = None
     created: datetime
     modified: datetime
+    has_avatar: bool
 
     @classmethod
     def from_dict(cls, data: dict) -> "User":
@@ -62,4 +63,5 @@ class User:
             "places_to_visit": self.places_to_visit,
             "created": self.created.timestamp(),
             "modified": self.modified.timestamp(),
+            "has_avatar": self.has_avatar,
         }

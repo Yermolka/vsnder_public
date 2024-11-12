@@ -12,6 +12,7 @@ class GetShortUserDto(DtoBase):
     last_name: str
     orientation: str
     year_of_study: int
+    has_avatar: bool
 
     @classmethod
     def from_model(cls, model: User) -> "GetShortUserDto":
@@ -21,6 +22,7 @@ class GetShortUserDto(DtoBase):
             last_name=model.last_name,
             orientation=model.orientation,
             year_of_study=model.year_of_study,
+            has_avatar=model.has_avatar,
         )
 
 
@@ -47,6 +49,7 @@ class GetUserDto(DtoBase):
     smoking: str
     top_3_people: str
     drinking: str
+    has_avatar: bool
 
     @classmethod
     def from_model(cls, model: User) -> "GetUserDto":
@@ -72,6 +75,7 @@ class GetUserDto(DtoBase):
             smoking=model.smoking or "",
             top_3_people=model.top_3_people or "",
             drinking=model.drinking or "",
+            has_avatar=model.has_avatar,
         )
 
 

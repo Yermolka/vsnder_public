@@ -1,6 +1,6 @@
 import { ax } from "../utils/axios";
 import { GetShortUserDto, GetUserDto, PostUserDto, UserChangePasswordDto } from "../dto/user"
-import { BaseSyntheticEvent } from "react";
+import { FormEvent } from "react";
 
 export async function getUsers(page: number, limit: number, orderBy: string): Promise<{ total: number, users: Array<GetShortUserDto> }> {
     const url = `/users?page=${page}&limit=${limit}&orderBy=${orderBy}`;
@@ -33,21 +33,14 @@ export async function getHasUserProfilePicture(userId: number) {
     return res;
 }
 
-export async function postUserImage(userId: number, event: BaseSyntheticEvent) {
-    if (!event.target.files || event.target.files.length === 0) {
-        return null;
-    }
-
-    const userFile = event.target.files[0];
-    if (userFile === undefined || userFile === null) {
+export async function postUserImage(userId: number, file: File | null) {
+    if (!file) {
         return null;
     }
 
     const data = new FormData();
-    console.log(userFile);
-    data.append("img", userFile[0]);
+    data.append("img", file);
     const res = await ax.post(`/users/${userId}/file`, data)
-        .then(console.log)
         .catch(console.error);
 
     return res;

@@ -25,6 +25,7 @@ export interface GetShortUserDto {
     last_name: string;
     orientation?: string;
     year_of_study: number;
+    has_avatar: boolean;
 }
 
 export function postUserFromGetUserDto(user: GetUserDto): PostUserDto {
@@ -82,4 +83,5 @@ export interface GetUserDto {
     smoking?: string;
     top_3_people?: string;
     drinking?: string;
+    has_avatar: boolean;
 }
