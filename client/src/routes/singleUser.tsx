@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { FullUserFrame } from "../components/FullUserFrame";
 
 export function SingleUser() {
-    const user = useLoaderData() as GetUserDto | undefined;
+    const user = useLoaderData() as GetUserDto | null;
     const userId = localStorage.getItem("userId") as string | null;
     const navigate = useNavigate();
 
@@ -22,13 +22,6 @@ export function SingleUser() {
     );
 }
 
-export async function singleUserLoader({ params }: any) {
-    console.log(params);
-
-    const user = await getUser(params.userId)
-    if (user.status === 200) {
-        return user.data;
-    }
-
-    return null;
+export async function singleUserLoader({ params }: any): Promise<GetUserDto | null>{
+    return await getUser(params.userId)
 }

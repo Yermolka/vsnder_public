@@ -1,5 +1,6 @@
 export interface PostUserDto {
     age?: number;
+    year_of_study: number;
     orientation?: string;
     interests?: string;
     vsn_interests?: string;
@@ -29,6 +30,7 @@ export interface GetShortUserDto {
 export function postUserFromGetUserDto(user: GetUserDto): PostUserDto {
     return {
         age: user.age || 0,
+        year_of_study: user.year_of_study,
         orientation: user.orientation || '',
         interests: user.interests || '',
         vsn_interests: user.vsn_interests || '',

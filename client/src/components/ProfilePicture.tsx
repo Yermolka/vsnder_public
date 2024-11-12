@@ -22,7 +22,7 @@ export function ProfilePicture({ userId }: ProfilePictureProps) {
 
     return (
         <>
-            {img ? <img src={img} width={64} height={64} /> : <Avatar sizes="64 64" />}
+            {img ? <img src={img} width={64} height={64} /> : <Avatar sx={{ width: 64, height: 64}} />}
         </>
     )
 }

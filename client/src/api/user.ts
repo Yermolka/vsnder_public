@@ -1,20 +1,24 @@
 import { ax } from "../utils/axios";
-import { PostUserDto, UserChangePasswordDto } from "../dto/user"
+import { GetShortUserDto, GetUserDto, PostUserDto, UserChangePasswordDto } from "../dto/user"
 
-export async function getUsers() {
-    return await ax.get('/users');
+export async function getUsers(): Promise<Array<GetShortUserDto>> {
+    return await ax.get('/users')
+        .then(res => { return res.data as Array<GetShortUserDto>; }, err => { return []; });
 }
 
-export async function getUser(id: number) {
-    return await ax.get(`/users/${id}`);
+export async function getUser(id: number): Promise<GetUserDto | null> {
+    return await ax.get(`/users/${id}`)
+        .then(res => { return res.data as GetUserDto; }, err => { return null; });
 }
 
-export async function postUser(data: PostUserDto) {
-    return await ax.post('/user/edit', data);
+export async function postUser(data: PostUserDto): Promise<number | string> {
+    return await ax.post('/user/edit', data)
+        .then(res => { return res.data.userId; }, err => { return err.data; });
 }
 
 export async function postUserChangePassword(data: UserChangePasswordDto) {
-    return await ax.post('/user/change_password', data);
+    return await ax.post('/user/change_password', data)
+        .then(res => { return res.data.userId; }, err => { return err.data; });
 }
 
 export async function getHasUserProfilePicture(userId: number) {

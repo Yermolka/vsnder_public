@@ -19,11 +19,6 @@ export function ListUsers() {
 
 export async function listUsersLoader() {
     const res = await getUsers();
-    if (res.status === 200) {
-        return res.data;
-    } else if (res.status === 401) {
-        return redirect("/logout");
-    }
 
-    return null;
+    return res;
 }

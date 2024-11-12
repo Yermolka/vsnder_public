@@ -41,8 +41,17 @@ export default function EditUser() {
                                 <TextField
                                     type="text"
                                     name="orientation"
-                                    label="Ориентация"
+                                    label="Программа"
                                     value={props.values.orientation}
+                                    onChange={props.handleChange}
+                                    fullWidth />
+                            </Grid2>
+                            <Grid2 size={3}>
+                                <TextField
+                                    type="text"
+                                    name="year_of_study"
+                                    label="Курс"
+                                    value={props.values.year_of_study}
                                     onChange={props.handleChange}
                                     fullWidth />
                             </Grid2>
@@ -185,9 +194,6 @@ export default function EditUser() {
 
 export async function editUserAction(params: PostUserDto) {
     const res = await postUser(params);
-    if (res.status === 200) {
-        return res.data;
-    }
 
     return redirect("/users");
 }
@@ -199,9 +205,6 @@ export async function editUserLoader() {
     }
 
     const user = await getUser(parseInt(userId))
-    if (user.status === 200) {
-        return user.data;
-    }
 
-    return redirect("/users");
+    return user ? user : redirect("/users");
 }
