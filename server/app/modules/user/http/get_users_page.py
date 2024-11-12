@@ -27,6 +27,8 @@ async def get_users_page_handler(request: Request):
 
     total, users = await get_users_page(page, limit, order_by)
 
+    print(f"{page=} {order_by=}")
+
     return json_response(
         {
             "total": total,

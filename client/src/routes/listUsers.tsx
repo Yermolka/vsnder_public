@@ -1,4 +1,4 @@
-import { Box, Grid2 } from "@mui/material";
+import { Box, Button, Grid2 } from "@mui/material";
 import { redirect, useLoaderData } from "react-router-dom";
 import { UserFrame } from "../components/UserFrame";
 import { GetShortUserDto, GetUserDto } from "../dto/user";
@@ -15,9 +15,10 @@ export function ListUsers() {
     const [page, setPage] = useState(1);
     const [loadedUsers, setLoadedUsers] = useState<Array<GetShortUserDto>>([]);
     const [finished, setFinished] = useState(false);
+    const [orderBy, setOrderBy] = useState("id");
 
     const loadMore = async () => {
-        const {total, users } = await loader(page, "id");
+        const {total, users } = await loader(page, orderBy);
         setLoadedUsers([...loadedUsers, ...users]);
         if (users.length === 0) {
             setFinished(true);
@@ -33,8 +34,26 @@ export function ListUsers() {
         });
     }, []);
 
+    useEffect(() => {
+        setTotal(0);
+        setLoadedUsers([]);
+        setFinished(false);
+        loader(1, orderBy).then(({ total, users }) => {
+            setTotal(total);
+            setLoadedUsers(users);
+            setPage(2);
+        })
+    }, [orderBy])
+
     return (
         <Box className="list-users">
+            <Button variant="contained" onClick={() => {
+                if (orderBy === "id") {
+                    setOrderBy("last_name");
+                } else {
+                    setOrderBy("id");
+                }
+            }}>Switch</Button>
             <InfiniteScroll
              dataLength={loadedUsers.length}
              loader={<h1>Loading...</h1>}
