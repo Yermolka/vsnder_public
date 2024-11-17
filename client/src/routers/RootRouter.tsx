@@ -1,12 +1,12 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Root from "../routes/root";
 import ErrorPage from "../error-page";
-import EditUser, { editUserAction, editUserLoader } from "../routes/editUser";
-import { SingleUser, singleUserLoader } from "../routes/singleUser";
-import { LoginPage, loginPageAction } from "../routes/loginPage";
+import EditUser, { editUserLoader } from "../routes/editUser";
+import { SingleUser, singleUserLoader, singleUserRouletteLoader } from "../routes/singleUser";
+import { LoginPage } from "../routes/loginPage";
 import { Logout } from "../routes/logout";
 import { ListUsers } from "../routes/listUsers";
-import { ChangePassword, changePasswordAction } from "../routes/changePassword";
+import { ChangePassword } from "../routes/changePassword";
 
 export const RootRouter = () => {
     const router = createBrowserRouter([
@@ -43,6 +43,11 @@ export const RootRouter = () => {
                     {
                         path: 'changePassword',
                         element: <ChangePassword />,
+                    },
+                    {
+                        path: 'roulette',
+                        element: <SingleUser />,
+                        loader: singleUserRouletteLoader,
                     }
                 ]
                 }

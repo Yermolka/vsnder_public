@@ -1,4 +1,4 @@
-from psycopg import Cursor
+from psycopg import AsyncCursor
 from psycopg.rows import tuple_row
 
 from db import get_db_cursor
@@ -33,28 +33,28 @@ RETURNING "id";
 
 
 async def set_user_image_by_user_id(user_id: int, image: bytes, media_type: str):
-    with get_db_cursor() as cursor:
+    async with get_db_cursor() as cursor:
         _user = await _get_user_by_id(cursor, user_id)
 
         return await _set_user_image_by_user_id(cursor, user_id, image, media_type)
     
 
-async def _set_user_image_by_user_id(cursor: Cursor, user_id: int, image: bytes, media_type: str):
+async def _set_user_image_by_user_id(cursor: AsyncCursor, user_id: int, image: bytes, media_type: str):
     cursor.row_factory = tuple_row
 
-    cursor.execute(GET_USER_IMAGE_ID, dict(user_id=user_id))
-    result = cursor.fetchone()
+    await cursor.execute(GET_USER_IMAGE_ID, dict(user_id=user_id))
+    result = await cursor.fetchone()
     
     if not result:
-        cursor.execute(INSERT_USER_IMAGE, dict(user_id=user_id, image=image, media_type=media_type))
-        result = cursor.fetchone()
+        await cursor.execute(INSERT_USER_IMAGE, dict(user_id=user_id, image=image, media_type=media_type))
+        result = await cursor.fetchone()
     else:
-        cursor.execute(UPDATE_USER_IMAGE, dict(user_id=user_id, image=image, media_type=media_type))
-        result = cursor.fetchone()
+        await cursor.execute(UPDATE_USER_IMAGE, dict(user_id=user_id, image=image, media_type=media_type))
+        result = await cursor.fetchone()
 
     file_id = result[0]
 
     if result:
-        cursor.execute(UPDATE_USER_HAS_AVATAR, dict(user_id=user_id))
+        await cursor.execute(UPDATE_USER_HAS_AVATAR, dict(user_id=user_id))
 
     return file_id

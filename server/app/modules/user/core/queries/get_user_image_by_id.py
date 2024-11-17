@@ -1,6 +1,6 @@
 from typing import Tuple
 from psycopg.rows import tuple_row
-from psycopg import Cursor
+from psycopg import AsyncCursor
 from db import get_db_cursor
 
 SELECT_IMAGE = """
@@ -11,15 +11,15 @@ WHERE "user_id" = %(user_id)s;
 
 
 async def get_user_image_by_id(user_id: int) -> Tuple[bytes, str]:
-    with get_db_cursor(get_user_image_by_id.__name__) as cursor:
+    async with get_db_cursor(get_user_image_by_id.__name__) as cursor:
         return await _get_user_image_by_id(cursor, user_id)
 
 
-async def _get_user_image_by_id(cursor: Cursor, user_id: int) -> Tuple[bytes, str]:
+async def _get_user_image_by_id(cursor: AsyncCursor, user_id: int) -> Tuple[bytes, str]:
     cursor.row_factory = tuple_row
 
-    cursor.execute(SELECT_IMAGE, {"user_id": user_id})
-    result = cursor.fetchone()
+    await cursor.execute(SELECT_IMAGE, {"user_id": user_id})
+    result = await cursor.fetchone()
 
     if not result:
         return None

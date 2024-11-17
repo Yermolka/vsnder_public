@@ -1,4 +1,4 @@
-from psycopg import Cursor
+from psycopg import AsyncCursor
 import pandas as pd
 from utils.logger import logger
 from db import connection
@@ -31,12 +31,21 @@ def insert(first_name: str, last_name: str, cursor: Cursor):
 def update(username: str, cursor: Cursor):
     try:
         query = """
-        UPDATE user SET password=%(password)s, original_password=%(original_password)s WHERE username=%(username)s;
+        UPDATE "user" SET password=%(password)s, original_password=%(original_password)s WHERE username=%(username)s;
         """
         password = "".join(choices(ascii_letters, k=10))
         cursor.execute(query, {'username': username, 'password': get_password_hash(password), 'original_password': password})
     except Exception as e:
         print(f"Error updating user {username}: {e}")
+
+def update_year_of_study(first_name: str, last_name: str, year: int, cursor: Cursor):
+    try:
+        query = """
+        UPDATE "user" SET year_of_study=%(year_of_study)s WHERE first_name=%(first_name)s AND last_name=%(last_name)s;
+        """
+        cursor.execute(query, {'first_name': first_name, 'last_name': last_name, 'year_of_study': year})
+    except Exception as e:
+        print(f"Error updating user {first_name} {last_name}: {e}")
 
 
 if __name__ == "__main__":
@@ -53,7 +62,9 @@ if __name__ == "__main__":
         first_name = row['Имя']
         last_name = row['Фамилия']
         # password = row['Пароль']
-        insert(first_name, last_name, cursor)
+        year = row['Курс']
+        update_year_of_study(first_name, last_name, year, cursor)
+        # insert(first_name, last_name, cursor)
         # update(username, cursor)
         count += cursor.rowcount
 

@@ -42,3 +42,8 @@ export async function postUserImage(userId: number, file: File | null) {
     return await ax.post(`/users/${userId}/file`, data)
         .then(res => { return res.data; }, (err: AxiosError) => { return err.response?.data; });
 }
+
+export async function getRandomUser(): Promise<GetUserDto> {
+    return await ax.get('/user/random')
+        .then(res => {return res.data}, (err: AxiosError) => { return err.response?.data; });
+}

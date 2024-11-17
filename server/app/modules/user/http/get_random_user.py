@@ -9,7 +9,7 @@ from random import choice
 
 
 @auth_guard()
-async def get_user_handler(request: Request):
+async def get_random_user_handler(request: Request):
     session = await get_session(request)
     user_id = session[USER_SESSION_USER_ID_KEY]
 

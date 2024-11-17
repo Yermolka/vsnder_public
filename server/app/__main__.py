@@ -1,4 +1,5 @@
 import os
+from db import open_pg_pool, close_pg_pool
 from utils.logger import logger
 from aiohttp import web
 from aiohttp_session import setup as setup_session
@@ -22,7 +23,10 @@ if environment == "development":
 app = web.Application(logger=logger, middlewares=middlewares)
 
 app.on_startup.append(ping_redis)
+app.on_startup.append(open_pg_pool)
+
 app.on_cleanup.append(close_redis)
+app.on_cleanup.append(close_pg_pool)
 
 redis_storage = RedisStorage(redis_client.redis, cookie_name=USER_SESSION_COOKIE_NAME)
 setup_session(app, redis_storage)

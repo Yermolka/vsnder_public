@@ -7,7 +7,7 @@ const breadcrumbToLink = [
     { name: "Смотреть всех", href: "/users", icon: <HomeIcon /> },
     { name: "Редактировать себя", href: "/edit", icon: <Edit /> },
     { name: "Изменить пароль", href: "/changePassword", icon: <Lock /> },
-    { name: "Крутануть рулетку!", href: "/users/1", icon: <Casino /> },
+    { name: "Крутануть рулетку!", href: "/roulette", icon: <Casino /> },
     { name: "Выйти", href: "/logout", icon: <ExitToApp /> },
 ];
 

@@ -1,4 +1,4 @@
-from psycopg import Cursor
+from psycopg import AsyncCursor
 from psycopg.rows import tuple_row
 from datetime import datetime
 
@@ -36,16 +36,16 @@ RETURNING "id";
 
 
 async def update_user_by_id(id: int, dto: PostUserDto) -> int:
-    with get_db_cursor() as cursor:
+    async with get_db_cursor() as cursor:
         _user = await _get_user_by_id(cursor, id)
 
         return await _update_user_by_id(cursor, id, dto)
 
 
-async def _update_user_by_id(cursor: Cursor, id: int, dto: PostUserDto) -> int:
+async def _update_user_by_id(cursor: AsyncCursor, id: int, dto: PostUserDto) -> int:
     cursor.row_factory = tuple_row
 
-    cursor.execute(UPDATE_USER, dict(id=id, modified=datetime.now(), **dto.to_dict()))
-    result = cursor.fetchone()
+    await cursor.execute(UPDATE_USER, dict(id=id, modified=datetime.now(), **dto.to_dict()))
+    result = await cursor.fetchone()
 
     return result[0]

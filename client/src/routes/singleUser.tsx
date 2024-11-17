@@ -1,10 +1,10 @@
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import { GetUserDto } from "../dto/user";
-import { getUser } from "../api/user";
+import { getRandomUser, getUser } from "../api/user";
 import { useEffect } from "react";
 import { FullUserFrame } from "../components/FullUserFrame";
 import dayjs from "dayjs";
-import { Grid2 } from "@mui/material";
+import { Button, Grid2 } from "@mui/material";
 
 export function SingleUser() {
     const user = useLoaderData() as GetUserDto | null;
@@ -19,7 +19,8 @@ export function SingleUser() {
 
     return (
         <>
-            {user && user.first_name && user.birth_stamp && user.birth_city ? <Link to={createCultUrl(user)} target="_blank" rel="noreferrer">НАТАЛЬНАЯ КАРТА</Link> : null}
+            {user ? <h1 style={{textAlign: "center"}}>{user.first_name} {user.last_name}</h1> : null}
+            {user && user.first_name && user.birth_stamp && user.birth_city ? <Link to={createCultUrl(user)} target="_blank" rel="noreferrer"><Button fullWidth variant="contained" size="large">НАТАЛЬНАЯ КАРТА</Button></Link> : null}
             {user ? (FullUserFrame(user)) : <h1>No user</h1>}
         </>
     );
@@ -34,4 +35,8 @@ function createCultUrl(user: GetUserDto) {
     return `http://geocult.ru/natalnaya-karta-onlayn-raschet?` +
     `fn=${user.first_name}&fd=${parsedDate.date()}&fm=${parsedDate.month() + 1}&fy=${parsedDate.year()}` +
     `&fh=${parsedDate.hour()}&fmn=${parsedDate.minute()}&c1=${user.birth_city}&lt=55.7522&ln=37.6155&hs=P&sb=1`
+}
+
+export async function singleUserRouletteLoader(): Promise<GetUserDto> {
+    return await getRandomUser();
 }
