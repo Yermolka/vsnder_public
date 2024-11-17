@@ -30,6 +30,8 @@ class User:
     created: datetime
     modified: datetime
     has_avatar: bool
+    birth_stamp: datetime | None = None
+    birth_city: str | None = None
 
     @classmethod
     def from_dict(cls, data: dict) -> "User":
@@ -64,4 +66,6 @@ class User:
             "created": self.created.timestamp(),
             "modified": self.modified.timestamp(),
             "has_avatar": self.has_avatar,
+            "birth_stamp": self.birth_stamp.timestamp(),
+            "birth_city": self.birth_city,
         }

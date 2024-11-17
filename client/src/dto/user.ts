@@ -17,6 +17,8 @@ export interface PostUserDto {
     smoking?: string;
     top_3_people?: string;
     drinking?: string;
+    birth_stamp?: string;
+    birth_city?: string;
 }
 
 export interface GetShortUserDto {
@@ -48,6 +50,8 @@ export function postUserFromGetUserDto(user: GetUserDto): PostUserDto {
         smoking: user.smoking || '',
         top_3_people: user.top_3_people || '',
         drinking: user.drinking || '',
+        birth_stamp: user.birth_stamp || '',
+        birth_city: user.birth_city || '',
     }
 }
 
@@ -84,4 +88,6 @@ export interface GetUserDto {
     top_3_people?: string;
     drinking?: string;
     has_avatar: boolean;
+    birth_stamp?: string;
+    birth_city?: string;
 }

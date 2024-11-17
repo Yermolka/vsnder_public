@@ -27,7 +27,9 @@ SET
     "smoking" = %(smoking)s,
     "top_3_people" = %(top_3_people)s,
     "drinking" = %(drinking)s,
-    "modified" = %(modified)s
+    "modified" = %(modified)s,
+    "birth_stamp" = %(birth_stamp)s,
+    "birth_city" = %(birth_city)s
 WHERE id = %(id)s
 RETURNING "id";
 """

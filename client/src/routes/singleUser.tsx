@@ -1,8 +1,10 @@
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import { GetUserDto } from "../dto/user";
 import { getUser } from "../api/user";
 import { useEffect } from "react";
 import { FullUserFrame } from "../components/FullUserFrame";
+import dayjs from "dayjs";
+import { Grid2 } from "@mui/material";
 
 export function SingleUser() {
     const user = useLoaderData() as GetUserDto | null;
@@ -16,12 +18,20 @@ export function SingleUser() {
     }, [user, userId]) 
 
     return (
-        <div>
+        <>
+            {user && user.first_name && user.birth_stamp && user.birth_city ? <Link to={createCultUrl(user)} target="_blank" rel="noreferrer">НАТАЛЬНАЯ КАРТА</Link> : null}
             {user ? (FullUserFrame(user)) : <h1>No user</h1>}
-        </div>
+        </>
     );
 }
 
 export async function singleUserLoader({ params }: any): Promise<GetUserDto | null>{
     return await getUser(params.userId)
+}
+
+function createCultUrl(user: GetUserDto) {
+    const parsedDate = dayjs(user.birth_stamp);
+    return `http://geocult.ru/natalnaya-karta-onlayn-raschet?` +
+    `fn=${user.first_name}&fd=${parsedDate.date()}&fm=${parsedDate.month() + 1}&fy=${parsedDate.year()}` +
+    `&fh=${parsedDate.hour()}&fmn=${parsedDate.minute()}&c1=${user.birth_city}&lt=55.7522&ln=37.6155&hs=P&sb=1`
 }

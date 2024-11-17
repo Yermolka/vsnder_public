@@ -1,14 +1,14 @@
 import { Breadcrumbs, Chip, emphasize, Link, styled } from "@mui/material";
 import HomeIcon from '@mui/icons-material/Home';
-import { Whatshot } from "@mui/icons-material";
+import { Edit, Whatshot, Lock, Casino, ExitToApp } from "@mui/icons-material";
 
 
 const breadcrumbToLink = [
     { name: "Смотреть всех", href: "/users", icon: <HomeIcon /> },
-    { name: "Редактировать себя", href: "/edit", icon: <Whatshot /> },
-    { name: "Изменить пароль", href: "/changePassword", icon: <Whatshot /> },
-    { name: "Крутануть рулетку!", href: "/users/1", icon: <Whatshot /> },
-    { name: "Выйти", href: "/logout", icon: <Whatshot /> },
+    { name: "Редактировать себя", href: "/edit", icon: <Edit /> },
+    { name: "Изменить пароль", href: "/changePassword", icon: <Lock /> },
+    { name: "Крутануть рулетку!", href: "/users/1", icon: <Casino /> },
+    { name: "Выйти", href: "/logout", icon: <ExitToApp /> },
 ];
 
 const StyledBreadcrumb = styled(Chip)(({ theme }) => {
@@ -20,7 +20,7 @@ const StyledBreadcrumb = styled(Chip)(({ theme }) => {
       color: theme.palette.text.primary,
       fontWeight: theme.typography.fontWeightRegular,
       '&:hover, &:focus': {
-        backgroundColor: emphasize(backgroundColor, 0.06),
+        backgroundColor: emphasize(backgroundColor, 0.20),
       },
       '&:active': {
         boxShadow: theme.shadows[1],
@@ -43,9 +43,6 @@ export function VSNBreadcrumbs() {
                             icon={icon}
                             />
                         );
-                    // return <Link underline="hover" color={href===pathname ? "secondary" : "primary"} href={href} key={name}>
-                    //             {name}
-                    //         </Link>
                 })
             }
         </Breadcrumbs>

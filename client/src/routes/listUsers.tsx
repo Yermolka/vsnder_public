@@ -56,9 +56,8 @@ export function ListUsers() {
             }}>Switch</Button>
             <InfiniteScroll
              dataLength={loadedUsers.length}
-             loader={<h1>Loading...</h1>}
+             loader={<h1><p style={{ textAlign: "center" }}>Loading...</p></h1>}
              hasMore={!finished}
-             endMessage={<p style={{ textAlign: "center" }}>That's all!</p>}
              next={loadMore}>
                 <Grid2 container direction="row" spacing={2} columns={{md: 12, xs: 6}} alignItems="stretch" justifyContent="center">
                     { total > 0 ? loadedUsers.map((user) => UserFrame(user)) : null}

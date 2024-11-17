@@ -24,4 +24,6 @@ export const editUserValidationSchema = yup.object().shape({
     smoking: yup.string().max(128),
     top_3_people: yup.string().max(128),
     drinking: yup.string().max(128),
+    birth_stamp: yup.string(),
+    birth_city: yup.string().max(128),
 })

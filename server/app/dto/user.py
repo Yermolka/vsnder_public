@@ -1,3 +1,4 @@
+from datetime import datetime
 from dto.base import DtoBase
 from dataclasses import dataclass
 from typing import Literal
@@ -50,6 +51,8 @@ class GetUserDto(DtoBase):
     top_3_people: str
     drinking: str
     has_avatar: bool
+    birth_stamp: str
+    birth_city: str
 
     @classmethod
     def from_model(cls, model: User) -> "GetUserDto":
@@ -76,6 +79,8 @@ class GetUserDto(DtoBase):
             top_3_people=model.top_3_people or "",
             drinking=model.drinking or "",
             has_avatar=model.has_avatar,
+            birth_stamp=model.birth_stamp.isoformat() if model.birth_stamp else  "",
+            birth_city=model.birth_city or "",
         )
 
 
@@ -99,3 +104,5 @@ class PostUserDto(DtoBase):
     smoking: Literal["Положительно", "Отрицательно", "Нейтрально"] | None = None
     top_3_people: str | None = None
     drinking: Literal["Положительно", "Отрицательно", "Нейтрально"] | None = None
+    birth_stamp: datetime | None = None
+    birth_city: str | None = None
