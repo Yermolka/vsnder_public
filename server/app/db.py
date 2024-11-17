@@ -50,4 +50,4 @@ async def get_db_cursor(name: str | None = None) -> AsyncGenerator[AsyncCursor, 
 
                 yield cursor
             finally:
-                cursor.close()
+                await cursor.close()
