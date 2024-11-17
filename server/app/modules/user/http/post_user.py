@@ -15,8 +15,8 @@ async def post_user_handler(request: Request):
 
     try:
         dto = PostUserDto.from_dict(await request.json())
-    except Exception as e:
-        raise HTTPBadRequest(text=str(e))
+    except Exception:
+        raise HTTPBadRequest()
     
     await update_user_by_id(session_user_id, dto)
 

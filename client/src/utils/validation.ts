@@ -8,7 +8,7 @@ export const changePasswordValidationSchema = yup.object().shape({
 
 export const editUserValidationSchema = yup.object().shape({
     age: yup.number().min(0),
-    orientation: yup.string().max(128),
+    orientation: yup.string().max(128).required(),
     year_of_study: yup.number().min(1).max(4),
     interests: yup.string().max(128),
     vsnInterests: yup.string().max(128),
@@ -21,9 +21,9 @@ export const editUserValidationSchema = yup.object().shape({
     future_plans: yup.string().max(128),
     family_opinion: yup.string().max(128),
     favorite_programming_language: yup.string().max(128),
-    smoking: yup.string().max(128),
+    smoking: yup.string().max(128).required(),
     top_3_people: yup.string().max(128),
-    drinking: yup.string().max(128),
+    drinking: yup.string().max(128).required(),
     birth_stamp: yup.string(),
     birth_city: yup.string().max(128),
 })

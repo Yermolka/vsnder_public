@@ -196,9 +196,11 @@ export default function EditUser() {
                             <InputLabel color="primary">Отношение к курению</InputLabel>
                                 <Select
                                     name="smoking"
-                                    value={props.values.smoking}
+                                    value={props.values.smoking || "Нейтрально"
+                                    }
                                     onChange={props.handleChange}
-                                    fullWidth>
+                                    fullWidth
+                                    error={Boolean(props.errors.smoking)}>
                                     <MenuItem value="Нейтрально">Нейтрально</MenuItem>
                                     <MenuItem value="Отрицательно">Отрицательно</MenuItem>
                                     <MenuItem value="Положительно">Положительно</MenuItem>
@@ -208,9 +210,10 @@ export default function EditUser() {
                                 <InputLabel color="primary">Отношение к алкоголю</InputLabel>
                                 <Select
                                     name="drinking"
-                                    value={props.values.drinking}
+                                    value={props.values.drinking || "Нейтрально"}
                                     onChange={props.handleChange}
-                                    fullWidth>
+                                    fullWidth
+                                    error={Boolean(props.errors.drinking)}>
                                     <MenuItem value="Нейтрально">Нейтрально</MenuItem>
                                     <MenuItem value="Отрицательно">Отрицательно</MenuItem>
                                     <MenuItem value="Положительно">Положительно</MenuItem>
@@ -222,26 +225,14 @@ export default function EditUser() {
                                     name="orientation"
                                     value={props.values.orientation}
                                     onChange={props.handleChange}
-                                    fullWidth>
+                                    fullWidth
+                                    error={Boolean(props.errors.orientation)}>
                                     <MenuItem value="Социология">Социология</MenuItem>
                                     <MenuItem value="Психология">Психология</MenuItem>
                                     <MenuItem value="Политология">Политология</MenuItem>
                                     <MenuItem value="ГМУ">ГМУ</MenuItem>
                                 </Select>
                             </Grid2>
-                            {/* <Grid2 size={3}>
-                                <InputLabel color="primary">Курс</InputLabel>
-                                <Select
-                                    name="year_of_study"
-                                    value={props.values.year_of_study}
-                                    onChange={props.handleChange}
-                                    fullWidth>
-                                    <MenuItem value={1}>1</MenuItem>
-                                    <MenuItem value={2}>2</MenuItem>
-                                    <MenuItem value={3}>3</MenuItem>
-                                    <MenuItem value={4}>4</MenuItem>
-                                </Select>
-                            </Grid2> */}
                             <Grid2 size={3}>
                             <InputLabel color="primary">Дата и время рождения</InputLabel>
                                 <DateTimePicker
