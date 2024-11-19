@@ -2,6 +2,7 @@ import { ax } from "../utils/axios";
 import { GetShortUserDto, GetUserDto, PostUserDto, UserChangePasswordDto } from "../dto/user"
 import { FormEvent } from "react";
 import { AxiosError } from "axios";
+import { redirect } from "react-router-dom";
 
 export async function getUsers(page: number, limit: number, orderBy: string): Promise<{ total: number, users: Array<GetShortUserDto> }> {
     const url = `/users?page=${page}&limit=${limit}&orderBy=${orderBy}`;
@@ -9,7 +10,9 @@ export async function getUsers(page: number, limit: number, orderBy: string): Pr
         .then(res => {
             const { total, users }: { total: number, users: Array<GetShortUserDto> } = res.data;
             return { total, users };
-        }, err => { return { total: 0, users: [] }; });
+        }, (err: AxiosError) => {
+            return { total: 0, users: [] };
+        });
 }
 
 export async function getUser(id: number): Promise<GetUserDto | null> {
@@ -45,5 +48,5 @@ export async function postUserImage(userId: number, file: File | null) {
 
 export async function getRandomUser(): Promise<GetUserDto> {
     return await ax.get('/user/random')
-        .then(res => {return res.data}, (err: AxiosError) => { return err.response?.data; });
+        .then(res => { return res.data }, (err: AxiosError) => { return err.response?.data; });
 }

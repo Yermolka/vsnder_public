@@ -1,10 +1,11 @@
 import { Box, Button, Grid2 } from "@mui/material";
-import { redirect, useLoaderData } from "react-router-dom";
 import { UserFrame } from "../components/UserFrame";
-import { GetShortUserDto, GetUserDto } from "../dto/user";
-import { getUsers } from "../api/user";
+import { GetShortUserDto } from "../dto/user";
+import { getUser, getUsers } from "../api/user";
 import { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { redirect, useNavigate } from "react-router-dom";
+
 
 export function ListUsers() {
     const loader = async (page: number, orderBy: string) => {
@@ -16,6 +17,7 @@ export function ListUsers() {
     const [loadedUsers, setLoadedUsers] = useState<Array<GetShortUserDto>>([]);
     const [finished, setFinished] = useState(false);
     const [orderBy, setOrderBy] = useState("id");
+    const navigate = useNavigate();
 
     const loadMore = async () => {
         const {total, users } = await loader(page, orderBy);

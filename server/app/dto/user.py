@@ -1,6 +1,6 @@
 from datetime import datetime
 from dto.base import DtoBase
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Literal
 
 from models.user import User
@@ -86,23 +86,23 @@ class GetUserDto(DtoBase):
 
 @dataclass(kw_only=True)
 class PostUserDto(DtoBase):
-    age: int | None = None
+    age: int | None = field(metadata={"deserialize": lambda x: x or None })
     year_of_study: int
-    orientation: Literal["Социология", "Психология", "Политология", "ГМУ"] | None = None
-    interests: str | None = None
-    vsn_interests: str | None = None
-    places_to_visit: str | None = None
-    study_places: str | None = None
-    music: str | None = None
-    favorite_movies: str | None = None
-    religion: str | None = None
-    status: str | None = None
-    future_plans: str | None = None
-    family_opinion: str | None = None
-    favorite_programming_language: str | None = None
+    orientation: Literal["Социология", "Психология", "Политология", "ГМУ"] | None = field(metadata={"deserialize": lambda x: x or None })
+    interests: str | None = field(metadata={"deserialize": lambda x: x or None })
+    vsn_interests: str | None = field(metadata={"deserialize": lambda x: x or None })
+    places_to_visit: str | None = field(metadata={"deserialize": lambda x: x or None })
+    study_places: str | None = field(metadata={"deserialize": lambda x: x or None })
+    music: str | None = field(metadata={"deserialize": lambda x: x or None })
+    favorite_movies: str | None = field(metadata={"deserialize": lambda x: x or None })
+    religion: str | None = field(metadata={"deserialize": lambda x: x or None })
+    status: str | None = field(metadata={"deserialize": lambda x: x or None })
+    future_plans: str | None = field(metadata={"deserialize": lambda x: x or None })
+    family_opinion: str | None = field(metadata={"deserialize": lambda x: x or None })
+    favorite_programming_language: str | None = field(metadata={"deserialize": lambda x: x or None })
     lizards_or_russians: bool = True
-    smoking: Literal["Положительно", "Отрицательно", "Нейтрально"] | None = None
-    top_3_people: str | None = None
-    drinking: Literal["Положительно", "Отрицательно", "Нейтрально"] | None = None
-    birth_stamp: datetime | None = None
-    birth_city: str | None = None
+    smoking: Literal["Положительно", "Отрицательно", "Нейтрально"] | None = field(metadata={"deserialize": lambda x: x or None })
+    top_3_people: str | None = field(metadata={"deserialize": lambda x: x or None })
+    drinking: Literal["Положительно", "Отрицательно", "Нейтрально"] | None = field(metadata={"deserialize": lambda x: x or None })
+    birth_stamp: datetime | None = field(metadata={"deserialize": lambda x: datetime.fromisoformat(x) if x is not None else None })
+    birth_city: str | None = field(metadata={"deserialize": lambda x: x or None })
