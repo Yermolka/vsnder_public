@@ -1,0 +1,37 @@
+[project]
+name = "vsnder"
+version = "0.1.0"
+description = "Default template for PDM package"
+authors = [
+    {name = "Andrey Yermoshin", email = "ermoshin.andrey2@wb.ru"},
+]
+dependencies = [
+    "flask[async]>=3.0.3",
+    "Flask-HTTPAuth>=4.8.0",
+    "dotenv>=0.0.5",
+    "psycopg[pool]>=3.2.3",
+    "pandas>=2.2.3",
+    "python-dotenv>=1.0.1",
+    "flask-session[cachelib]>=0.8.0",
+    "aiohttp>=3.10.10",
+    "aiohttp-session>=2.12.1",
+    "redis>=5.2.0",
+    "mashumaro>=3.14",
+    "watchdog>=6.0.0",
+    "transliterate>=1.10.2",
+    "pillow>=11.0.0",
+]
+requires-python = "==3.12.*"
+readme = "README.md"
+license = {text = "No-License"}
+
+
+[tool.pdm]
+distribution = false
+
+[tool.pdm.scripts]
+local.cmd = "pdm sync"
+server.cmd = "pdm run -g python app"
+server_dev.cmd = "pdm run -g python -Xfrozen_modules=off -u app"
+development.composite = ["local", "server_dev"]
+watch.cmd = "watchmedo auto-restart --directory='app' --patterns='*.py;*.yaml;*.toml' --recursive pdm run development"

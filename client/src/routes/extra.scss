@@ -1,0 +1,36 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.change-password-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 32px 22px 42px;
+}
+
+.edit-user-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 32px 22px 42px;
+}
+
+.div-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header-nav {
+    color: purple;
+    background-color: white;
+}
+
+// .list-users {
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+// }

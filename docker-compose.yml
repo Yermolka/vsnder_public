@@ -1,0 +1,55 @@
+name: "vsnder"
+
+services:
+  proxy:
+    depends_on:
+      - client
+    build:
+      context: proxy
+      dockerfile: ./Dockerfile
+    ports:
+      - "80:80"
+      - "6379:6379"
+
+  client:
+    depends_on:
+      - server
+    build:
+      context: client
+      dockerfile: ./Dockerfile
+    volumes:
+      - ./client/src:/vsnder/client/src
+    
+  server:
+    depends_on:
+      - redis
+    build:
+      context: server
+      dockerfile: ./Dockerfile
+    volumes:
+      - ./server/app:/vsnder/server/app
+      - ./server/pyproject.toml:/vsnder/server/pyproject.toml
+    env_file:
+      - "./server/db.env"
+    ports:
+      - "35600:35600"
+
+  redis:
+    image: "mirror.gcr.io/redis:7.0.9"
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_USER=${REDIS_USERNAME}
+    volumes:
+      - redis-data:/data
+    command: >
+      sh -c '
+      mkdir -p /usr/local/etc/redis &&
+      echo "bind 0.0.0.0" > /usr/local/etc/redis/redis.conf &&
+      echo "requirepass $REDIS_PASSWORD" >> /usr/local/etc/redis/redis.conf &&
+      echo "user default on nopass ~* +@all" > /usr/local/etc/redis/users.acl &&
+      echo "user $REDIS_USER on >$REDIS_PASSWORD ~* +@all" >> /usr/local/etc/redis/users.acl &&
+      redis-server /usr/local/etc/redis/redis.conf --aclfile /usr/local/etc/redis/users.acl --save 60 1 --loglevel warning
+      '
+
+volumes:
+  redis-data:
