@@ -8,6 +8,7 @@ from common.consts import USER_SESSION_COOKIE_NAME
 from common.redis import redis as redis_client, close_redis, ping_redis
 
 from modules.user.http import user_routes
+from modules.message.http import message_routes
 from common.middlewares.debug import json_payload_logger
 from common.middlewares.error import common_errors
 
@@ -31,7 +32,7 @@ app.on_cleanup.append(close_pg_pool)
 redis_storage = RedisStorage(redis_client.redis, cookie_name=USER_SESSION_COOKIE_NAME)
 setup_session(app, redis_storage)
 
-routes = user_routes
+routes = user_routes + message_routes
 
 app.add_routes(routes)
 
