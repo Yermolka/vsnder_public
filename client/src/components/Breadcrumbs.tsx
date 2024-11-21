@@ -13,7 +13,7 @@ const breadcrumbToLink = [
 
 const StyledBreadcrumb = styled(Chip)(({ theme }) => {
     const backgroundColor =
-      emphasize(theme.palette.primary.main, 0.12);
+      emphasize(theme.palette.primary.main, 0.01);
     return {
       backgroundColor,
       height: theme.spacing(3),

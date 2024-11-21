@@ -1,4 +1,4 @@
-import { Box, Button, Grid2, InputLabel, MenuItem, Paper, Select } from "@mui/material";
+import { Box, Button, Divider, Grid2, InputLabel, MenuItem, Paper, Select, TextField } from "@mui/material";
 import { UserFrame } from "../components/UserFrame";
 import { GetShortUserDto } from "../dto/user";
 import { getUser, getUsers } from "../api/user";
@@ -71,75 +71,100 @@ export function ListUsers() {
         })
     }, [orderBy, orientation, yearOfStudy, status])
 
+    const inputSxProps = {
+        "& .MuiOutlinedInput-root": {
+            color: "#fff",
+            "&.Mui-focused": {
+                "& .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#fff",
+                    borderWidth: "2px",
+                },
+            },
+        },
+        "& .MuiInputLabel-outlined": {
+            color: "#fff",
+            "&.Mui-focused": {
+                color: "#fff",
+            }
+        }
+    }
+
     return (
-        <Box className="list-users">
-            {/* <Paper elevation={8} sx={{ minWidth: "80%", alignContent: "center", }}>
-                <Grid2 container display="flex" flexDirection="row" spacing={2} columns={4}>
-                    <Grid2>
-                        <InputLabel color="primary">Сортировать</InputLabel>
-                        <Select
-                            name="select-order-by"
-                            variant="filled"
-                            value={orderBy}
-                            onChange={(e) => setOrderBy(e.target.value)}>
-                            <MenuItem value="id">По умолчанию</MenuItem>
-                            <MenuItem value="first_name">По имени</MenuItem>
-                            <MenuItem value="last_name">По фамилии</MenuItem>
-                            <MenuItem value="age">По возрасту</MenuItem>
-                            <MenuItem value="orientation">По направлению</MenuItem>
-                            <MenuItem value="age_of_study">По курсу</MenuItem>
-                        </Select>
-                    </Grid2>
-                    <Grid2>
-                        <InputLabel color="primary">Направление</InputLabel>
-                        <Select
-                            name="select-orientation"
-                            variant="filled"
-                            value={orientation}
-                            onChange={(e) => setOrientation(e.target.value)}>
-                            <MenuItem value="any">Любое</MenuItem>
-                            <MenuItem value="Психология">Психология</MenuItem>
-                            <MenuItem value="Социология">Социология</MenuItem>
-                            <MenuItem value="Политология">Политология</MenuItem>
-                            <MenuItem value="ГМУ">ГМУ</MenuItem>
-                        </Select>
-                    </Grid2>
-                    <Grid2>
-                        <InputLabel color="primary">Курс</InputLabel>
-                        <Select
-                            name="select-year-of-study"
-                            variant="filled"
-                            value={yearOfStudy}
-                            onChange={(e) => setYearOfStudy(Number(e.target.value))}>
-                            <MenuItem value="-1">Любой</MenuItem>
-                            <MenuItem value="1">1</MenuItem>
-                            <MenuItem value="2">2</MenuItem>
-                            <MenuItem value="3">3</MenuItem>
-                            <MenuItem value="4">4</MenuItem>
-                        </Select>
-                    </Grid2>
-                    <Grid2>
-                        <InputLabel color="primary">Семейное положение</InputLabel>
-                        <Select
-                            name="select-status"
-                            variant="filled"
-                            value={status}
-                            onChange={(e) => setStatus(e.target.value)}>
-                            <MenuItem value="any">Любое</MenuItem>
-                            <MenuItem value="Замужем/Женат">Замужем/Женат</MenuItem>
-                            <MenuItem value="В отношениях">В отношениях</MenuItem>
-                            <MenuItem value="Схожу на свидание">Схожу на свидание</MenuItem>
-                            <MenuItem value="Чиллю соло">Чиллю соло</MenuItem>
-                        </Select>
-                    </Grid2>
+        <Box width="100%" alignContent="center" alignItems="center" justifyContent="center" justifyItems="center" >
+            <Grid2 container width="80%" display="flex" flexDirection="row" spacing={2} columns={{lg: 4, md: 2, xs: 1}} paddingBottom={1}>
+                <Grid2 size={1}>
+                    <TextField
+                        name="select-order-by"
+                        label="Сортировать"
+                        value={orderBy}
+                        select
+                        onChange={(e) => setOrderBy(e.target.value)}
+                        sx={inputSxProps}
+                        fullWidth>
+                        <MenuItem value="id">По умолчанию</MenuItem>
+                        <MenuItem value="first_name">По имени</MenuItem>
+                        <MenuItem value="last_name">По фамилии</MenuItem>
+                        <MenuItem value="age">По возрасту</MenuItem>
+                        <MenuItem value="orientation">По направлению</MenuItem>
+                        <MenuItem value="age_of_study">По курсу</MenuItem>
+                    </TextField>
                 </Grid2>
-            </Paper> */}
+                <Grid2 size={1}>
+                    <TextField
+                        name="select-orientation"
+                        label="Направление"
+                        value={orientation}
+                        onChange={(e) => setOrientation(e.target.value)}
+                        select
+                        sx={inputSxProps}
+                        fullWidth>
+                        <MenuItem value="any">Любое</MenuItem>
+                        <MenuItem value="Психология">Психология</MenuItem>
+                        <MenuItem value="Социология">Социология</MenuItem>
+                        <MenuItem value="Политология">Политология</MenuItem>
+                        <MenuItem value="ГМУ">ГМУ</MenuItem>
+                    </TextField>
+                </Grid2>
+                <Grid2 size={1}>
+                    <TextField
+                        name="select-year-of-study"
+                        label="Курс"
+                        value={yearOfStudy}
+                        onChange={(e) => setYearOfStudy(Number(e.target.value))}
+                        select 
+                        sx={inputSxProps}
+                        fullWidth>
+                        <MenuItem value="-1">Любой</MenuItem>
+                        <MenuItem value="1">1</MenuItem>
+                        <MenuItem value="2">2</MenuItem>
+                        <MenuItem value="3">3</MenuItem>
+                        <MenuItem value="4">4</MenuItem>
+                    </TextField>
+                </Grid2>
+                <Grid2 size={1}>
+                    <TextField
+                        name="select-status"
+                        label="Семейное положение"
+                        value={status}
+                        onChange={(e) => setStatus(e.target.value)}
+                        select 
+                        sx={inputSxProps}
+                        fullWidth>
+                        <MenuItem value="any">Любое</MenuItem>
+                        <MenuItem value="Замужем/Женат">Замужем/Женат</MenuItem>
+                        <MenuItem value="В отношениях">В отношениях</MenuItem>
+                        <MenuItem value="Схожу на свидание">Схожу на свидание</MenuItem>
+                        <MenuItem value="Чиллю соло">Чиллю соло</MenuItem>
+                    </TextField>
+                </Grid2>
+            </Grid2>
+            <Divider variant="middle" flexItem />
             <InfiniteScroll
              dataLength={loadedUsers.length}
              loader={<h1><p style={{ textAlign: "center" }}>Загружаем еще...</p></h1>}
              hasMore={!finished}
              next={loadMore}>
-                <Grid2 sx={{ width: "100%"}} container direction="row" spacing={2} columns={{md: 12, xs: 6}} alignItems="center" alignContent="center" justifyItems="center" justifyContent="center">
+                <Grid2 sx={{ width: "100vw"}} container direction="row" spacing={2} columns={{md: 12, xs: 6}} alignItems="center" alignContent="center" justifyItems="center" justifyContent="center">
                     { total > 0 ? loadedUsers.map((user) => UserFrame(user)) : null}
                 </Grid2>
              </InfiniteScroll>

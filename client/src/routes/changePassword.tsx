@@ -8,8 +8,26 @@ import { useState } from "react";
 export function ChangePassword() {
     const [postMsg, setPostMsg] = useState<string | null>(null);
     
+    const inputSxProps = {
+        "& .MuiOutlinedInput-root": {
+            color: "#fff",
+            "&.Mui-focused": {
+                "& .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#fff",
+                    borderWidth: "2px",
+                },
+            },
+        },
+        "& .MuiInputLabel-outlined": {
+            color: "#fff",
+            "&.Mui-focused": {
+                color: "#fff",
+            }
+        }
+    }
+
     return (
-        <Paper elevation={6}>
+        // <Paper elevation={6}>
             <Formik 
             initialValues={{old_password: '', new_password: '', new_password_re: ''}}
             validationSchema={changePasswordValidationSchema}
@@ -35,7 +53,8 @@ export function ChangePassword() {
                                 onChange={props.handleChange}
                                 helperText={props.errors.old_password}
                                 error={Boolean(props.errors.old_password)}
-                                fullWidth/>
+                                fullWidth
+                                sx={inputSxProps}/>
                             </Grid2>
                             <Grid2 size={3}>
                                 <TextField 
@@ -46,7 +65,8 @@ export function ChangePassword() {
                                 onChange={props.handleChange}
                                 helperText={props.errors.new_password}
                                 error={Boolean(props.errors.new_password)}
-                                fullWidth/>
+                                fullWidth
+                                sx={inputSxProps}/>
                             </Grid2>
                             <Grid2 size={3}>
                                 <TextField 
@@ -57,7 +77,8 @@ export function ChangePassword() {
                                 onChange={props.handleChange}
                                 helperText={props.errors.new_password_re}
                                 error={Boolean(props.errors.new_password_re)}
-                                fullWidth/>
+                                fullWidth
+                                sx={inputSxProps}/>
                             </Grid2>
                             <Grid2 size={3} alignContent="center" justifyContent="center" sx={{ width: '100%'}}>
                                 <Button fullWidth variant="contained" type="submit" disabled={props.isSubmitting}>Изменить</Button>
@@ -67,7 +88,6 @@ export function ChangePassword() {
                     </Form>
                 }
             </Formik>
-          </Paper>
     )
 }
 

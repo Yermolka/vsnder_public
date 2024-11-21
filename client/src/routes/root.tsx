@@ -30,7 +30,7 @@ export default function Root() {
             {navigation.state === "loading" ? <Skeleton /> : null }
             
             <div id="detail">
-                <Box alignContent="center" justifyContent="center" alignItems="center" justifyItems="center">
+                <Box width="100vw" alignContent="center" justifyContent="center" alignItems="center" justifyItems="center">
                     <Outlet />
                 </Box>
             </div>

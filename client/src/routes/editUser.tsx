@@ -163,9 +163,7 @@ export default function EditUser() {
                                     sx={inputSxProps} />
                             </Grid2>
                             <Grid2 size={3}>
-                                {/* <InputLabel id="status-label" color="primary">Семейное положение</InputLabel> */}
                                 <TextField
-                                    // labelId="status-label"
                                     label="Семейное положение"
                                     name="status"
                                     value={props.values.status}
@@ -231,9 +229,9 @@ export default function EditUser() {
                                     sx={inputSxProps}/>
                             </Grid2>
                             <Grid2 size={3}>
-                            <InputLabel color="primary">Отношение к курению</InputLabel>
                                 <TextField
                                     name="smoking"
+                                    label="Отношение к курению"
                                     value={props.values.smoking || "Нейтрально"
                                     }
                                     onChange={props.handleChange}
@@ -247,9 +245,9 @@ export default function EditUser() {
                                 </TextField>
                             </Grid2>
                             <Grid2 size={3}>
-                                <InputLabel color="primary">Отношение к алкоголю</InputLabel>
                                 <TextField
                                     name="drinking"
+                                    label="Отношение к алкоголю"
                                     value={props.values.drinking || "Нейтрально"}
                                     onChange={props.handleChange}
                                     fullWidth
@@ -262,9 +260,9 @@ export default function EditUser() {
                                 </TextField>
                             </Grid2>
                             <Grid2 size={3}>
-                                <InputLabel color="primary">Родовая программа</InputLabel>
                                 <TextField
                                     name="orientation"
+                                    label="Родовая программа"
                                     value={props.values.orientation}
                                     onChange={props.handleChange}
                                     fullWidth
