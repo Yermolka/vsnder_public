@@ -18,7 +18,7 @@ axiosRetry(ax, {
 
         const axiosError = error as AxiosError;
 
-        if (axiosError.status && axiosError.status === 404) {
+        if (axiosError.status && axiosError.status === 404 || axiosError.status === 401) {
             return false;
         }
 

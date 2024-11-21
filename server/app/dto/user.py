@@ -96,7 +96,7 @@ class PostUserDto(DtoBase):
     music: str | None = field(metadata={"deserialize": lambda x: x or None })
     favorite_movies: str | None = field(metadata={"deserialize": lambda x: x or None })
     religion: str | None = field(metadata={"deserialize": lambda x: x or None })
-    status: str | None = field(metadata={"deserialize": lambda x: x or None })
+    status: Literal["Замужем/Женат", "В отношениях", "Схожу на свидание", "Чиллю соло"] | None = field(metadata={"deserialize": lambda x: x or None })
     future_plans: str | None = field(metadata={"deserialize": lambda x: x or None })
     family_opinion: str | None = field(metadata={"deserialize": lambda x: x or None })
     favorite_programming_language: str | None = field(metadata={"deserialize": lambda x: x or None })

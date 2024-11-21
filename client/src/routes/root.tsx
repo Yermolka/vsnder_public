@@ -1,8 +1,9 @@
-import { Link, Outlet, useLoaderData, useMatch, useNavigate, useNavigation } from "react-router-dom";
-import { getUsers } from "../api/user";
-import { Skeleton } from "@mui/material";
+import { Outlet, useMatch, useNavigate, useNavigation } from "react-router-dom";
+import { Box, Skeleton } from "@mui/material";
 import { useEffect } from "react";
 import { VSNBreadcrumbs } from "../components/Breadcrumbs";
+import { ErrorBoundary } from "react-error-boundary";
+import ErrorFallback from "../components/ErrorFallback";
 
 export default function Root() {
     const navigation = useNavigation();
@@ -12,7 +13,6 @@ export default function Root() {
     const userId = localStorage.getItem("userId");
     useEffect(() => {
         if (appMatch) {
-            console.log(`index: ${userId}`);
             if (userId === null) {
                 return navigate('/login');
             } else {
@@ -22,7 +22,7 @@ export default function Root() {
     }, [appMatch]);
 
     return (
-        <>
+        <ErrorBoundary fallback={<div>ERROR</div>}>
             <div className="div-header">
                 {userId === null ? "" : <VSNBreadcrumbs />}
                 <h1>VSNder</h1>
@@ -30,8 +30,10 @@ export default function Root() {
             {navigation.state === "loading" ? <Skeleton /> : null }
             
             <div id="detail">
-                <Outlet />
+                <Box alignContent="center" justifyContent="center" alignItems="center" justifyItems="center">
+                    <Outlet />
+                </Box>
             </div>
-        </>
+        </ErrorBoundary>
     );
 }

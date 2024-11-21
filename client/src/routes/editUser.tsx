@@ -8,6 +8,7 @@ import { Form as ReactForm } from "react-router-dom";
 import { ChangeEvent, useState } from "react";
 import { DateTimePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
+import { ProfilePicture } from "../components/ProfilePicture";
 
 export default function EditUser() {
     const loaderData = useLoaderData() as GetUserDto;
@@ -15,6 +16,24 @@ export default function EditUser() {
     const [file, setFile] = useState<File | null>(null);
     const [postMsg, setPostMsg] = useState<string | null>(null);
     const [postFileMsg, setPostFileMsg] = useState<string | null>(null);
+
+    const inputSxProps = {
+        "& .MuiOutlinedInput-root": {
+            color: "#fff",
+            "&.Mui-focused": {
+                "& .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#fff",
+                    borderWidth: "2px",
+                },
+            },
+        },
+        "& .MuiInputLabel-outlined": {
+            color: "#fff",
+            "&.Mui-focused": {
+                color: "#fff",
+            }
+        }
+    }
 
     const handleFile = (file: File) => {
         if (!file) return;
@@ -39,33 +58,28 @@ export default function EditUser() {
                         setPostMsg(value);
                     }
                 });
+                
+                if (file) {
+                    postUserImage(loaderData.id, file).then((value: string | null) => {
+                        if (!value) {
+                            setPostFileMsg("Аватарка обновлена");
+                        } else {
+                            setPostFileMsg(value);
+                        }
+                    });
+                }
                 setSubmitting(false);
             }}>
             {props =>
-                <Paper elevation={3} style={{ padding: "25px", margin: "10px" }}>
-                    <ReactForm onSubmit={(event) => {
-                        if (file) { 
-                            postUserImage(loaderData.id, file).then((value: string | null) => {
-                                if (!value) {
-                                    setPostFileMsg("Аватарка обновлена");
-                                } else {
-                                    setPostFileMsg(value);
-                                }
-                        }); }
-                        event.preventDefault();
-                    }}>
-                        <Grid2 container direction="row" alignItems="stretch" justifyItems="center" spacing={2} columns={2}>
-                            <Grid2 size={1}>
-                                <Input type="file" name="img" id="img" onChange={handleFileChange} />
-                            </Grid2>
-                            <Grid2 size={1}>
-                                <Button variant="contained" type="submit" >Загрузить аватарку</Button>
-                                {postFileMsg ? <Typography variant="inherit" color="error">{postFileMsg}</Typography> : null}
-                            </Grid2>
-                        </Grid2>
-                    </ReactForm>
+                // <Paper sx={{ borderRadius: 10, maxWidth: {lg: "60%", md: "60%", xs: "90%"} }} elevation={3} style={{ padding: "25px", margin: "10px" }}>
                     <Form className="edit-user-form">
-                        <Grid2 container spacing={2} columns={{ md: 6, xs: 3 }} alignItems="stretch" justifyContent="center">
+                        <Grid2 container maxWidth="80%" spacing={2} columns={3} alignItems="center" display="flex" justifyContent="center">
+                            <Grid2 size={3}>
+                                <ProfilePicture userId={loaderData.id} hasAvatar={loaderData.has_avatar} size={200} />
+                            </Grid2>
+                            <Grid2 size={3}>
+                                <Typography>Аватарка: <Input type="file" name="img" id="img" onChange={handleFileChange} /></Typography>
+                            </Grid2>
                             <Grid2 size={3}>
                                 <TextField
                                     type="number"
@@ -73,16 +87,20 @@ export default function EditUser() {
                                     label="Возраст"
                                     value={props.values.age}
                                     onChange={props.handleChange}
-                                    fullWidth />
+                                    fullWidth
+                                    sx={inputSxProps}/>
                             </Grid2>
                             <Grid2 size={3}>
                                 <TextField
                                     type="text"
+                                    variant="outlined"
                                     name="interests"
                                     label="Увлечения"
                                     value={props.values.interests}
                                     onChange={props.handleChange}
-                                    fullWidth />
+                                    fullWidth 
+                                    sx={inputSxProps}
+                                    />
                             </Grid2>
                             <Grid2 size={3}>
                                 <TextField
@@ -91,7 +109,8 @@ export default function EditUser() {
                                     label="Увлечения на ВСН"
                                     value={props.values.vsn_interests}
                                     onChange={props.handleChange}
-                                    fullWidth />
+                                    fullWidth 
+                                    sx={inputSxProps}/>
                             </Grid2>
                             <Grid2 size={3}>
                                 <TextField
@@ -100,7 +119,8 @@ export default function EditUser() {
                                     label="Места, которые ты хочешь посетить"
                                     value={props.values.places_to_visit}
                                     onChange={props.handleChange}
-                                    fullWidth />
+                                    fullWidth 
+                                    sx={inputSxProps}/>
                             </Grid2>
                             <Grid2 size={3}>
                                 <TextField
@@ -109,7 +129,8 @@ export default function EditUser() {
                                     label="Где ты ботаешь"
                                     value={props.values.study_places}
                                     onChange={props.handleChange}
-                                    fullWidth />
+                                    fullWidth 
+                                    sx={inputSxProps}/>
                             </Grid2>
                             <Grid2 size={3}>
                                 <TextField
@@ -118,7 +139,8 @@ export default function EditUser() {
                                     label="Любимая музыка"
                                     value={props.values.music}
                                     onChange={props.handleChange}
-                                    fullWidth />
+                                    fullWidth
+                                    sx={inputSxProps} />
                             </Grid2>
                             <Grid2 size={3}>
                                 <TextField
@@ -127,7 +149,8 @@ export default function EditUser() {
                                     label="Любимые фильмы"
                                     value={props.values.favorite_movies}
                                     onChange={props.handleChange}
-                                    fullWidth />
+                                    fullWidth
+                                    sx={inputSxProps} />
                             </Grid2>
                             <Grid2 size={3}>
                                 <TextField
@@ -136,16 +159,26 @@ export default function EditUser() {
                                     label="Религия"
                                     value={props.values.religion}
                                     onChange={props.handleChange}
-                                    fullWidth />
+                                    fullWidth
+                                    sx={inputSxProps} />
                             </Grid2>
                             <Grid2 size={3}>
+                                {/* <InputLabel id="status-label" color="primary">Семейное положение</InputLabel> */}
                                 <TextField
-                                    type="text"
+                                    // labelId="status-label"
+                                    label="Семейное положение"
                                     name="status"
-                                    label="Статус?"
                                     value={props.values.status}
                                     onChange={props.handleChange}
-                                    fullWidth />
+                                    fullWidth
+                                    error={Boolean(props.errors.status)}
+                                    sx={inputSxProps}
+                                    select>
+                                    <MenuItem value="Замужем/Женат">Замужем/Женат</MenuItem>
+                                    <MenuItem value="В отношениях">В отношениях</MenuItem>
+                                    <MenuItem value="Схожу на свидание">Схожу на свидание</MenuItem>
+                                    <MenuItem value="Чиллю соло">Чиллю соло</MenuItem>
+                                </TextField>
                             </Grid2>
                             <Grid2 size={3}>
                                 <TextField
@@ -154,7 +187,8 @@ export default function EditUser() {
                                     label="Планы на будущее"
                                     value={props.values.future_plans}
                                     onChange={props.handleChange}
-                                    fullWidth />
+                                    fullWidth 
+                                    sx={inputSxProps}/>
                             </Grid2>
                             <Grid2 size={3}>
                                 <TextField
@@ -163,7 +197,8 @@ export default function EditUser() {
                                     label="Отношение к семье"
                                     value={props.values.family_opinion}
                                     onChange={props.handleChange}
-                                    fullWidth />
+                                    fullWidth
+                                    sx={inputSxProps} />
                             </Grid2>
                             <Grid2 size={3}>
                                 <TextField
@@ -172,7 +207,8 @@ export default function EditUser() {
                                     label="Любимый язык программирования"
                                     value={props.values.favorite_programming_language}
                                     onChange={props.handleChange}
-                                    fullWidth />
+                                    fullWidth 
+                                    sx={inputSxProps}/>
                             </Grid2>
                             <Grid2 size={3}>
                                 <TextField
@@ -181,7 +217,8 @@ export default function EditUser() {
                                     label="Топ 3 персоны"
                                     value={props.values.top_3_people}
                                     onChange={props.handleChange}
-                                    fullWidth />
+                                    fullWidth
+                                    sx={inputSxProps} />
                             </Grid2>
                             <Grid2 size={3}>
                                 <TextField
@@ -190,48 +227,55 @@ export default function EditUser() {
                                     label="Город рождения"
                                     value={props.values.birth_city}
                                     onChange={props.handleChange}
-                                    fullWidth />
+                                    fullWidth 
+                                    sx={inputSxProps}/>
                             </Grid2>
                             <Grid2 size={3}>
                             <InputLabel color="primary">Отношение к курению</InputLabel>
-                                <Select
+                                <TextField
                                     name="smoking"
                                     value={props.values.smoking || "Нейтрально"
                                     }
                                     onChange={props.handleChange}
                                     fullWidth
-                                    error={Boolean(props.errors.smoking)}>
+                                    error={Boolean(props.errors.smoking)}
+                                    sx={inputSxProps}
+                                    select>
                                     <MenuItem value="Нейтрально">Нейтрально</MenuItem>
                                     <MenuItem value="Отрицательно">Отрицательно</MenuItem>
                                     <MenuItem value="Положительно">Положительно</MenuItem>
-                                </Select>
+                                </TextField>
                             </Grid2>
                             <Grid2 size={3}>
                                 <InputLabel color="primary">Отношение к алкоголю</InputLabel>
-                                <Select
+                                <TextField
                                     name="drinking"
                                     value={props.values.drinking || "Нейтрально"}
                                     onChange={props.handleChange}
                                     fullWidth
-                                    error={Boolean(props.errors.drinking)}>
+                                    error={Boolean(props.errors.drinking)}
+                                    sx={inputSxProps}
+                                    select>
                                     <MenuItem value="Нейтрально">Нейтрально</MenuItem>
                                     <MenuItem value="Отрицательно">Отрицательно</MenuItem>
                                     <MenuItem value="Положительно">Положительно</MenuItem>
-                                </Select>
+                                </TextField>
                             </Grid2>
                             <Grid2 size={3}>
                                 <InputLabel color="primary">Родовая программа</InputLabel>
-                                <Select
+                                <TextField
                                     name="orientation"
                                     value={props.values.orientation}
                                     onChange={props.handleChange}
                                     fullWidth
-                                    error={Boolean(props.errors.orientation)}>
+                                    error={Boolean(props.errors.orientation)}
+                                    sx={inputSxProps}
+                                    select>
                                     <MenuItem value="Социология">Социология</MenuItem>
                                     <MenuItem value="Психология">Психология</MenuItem>
                                     <MenuItem value="Политология">Политология</MenuItem>
                                     <MenuItem value="ГМУ">ГМУ</MenuItem>
-                                </Select>
+                                </TextField>
                             </Grid2>
                             <Grid2 size={3}>
                             <InputLabel color="primary">Дата и время рождения</InputLabel>
@@ -244,15 +288,17 @@ export default function EditUser() {
                                     }}
                                     disableFuture
                                     timezone="UTC"
+                                    sx={{ width: "100%" }}
                                 />
                             </Grid2>
                             <Grid2 size={4} alignContent="center">
                                 <Button fullWidth variant="contained" type="submit" disabled={props.isSubmitting}>Изменить</Button>
-                                {postMsg ? <Typography variant="inherit" color="error">{postMsg}</Typography> : null}
+                                {postMsg ? <Typography variant="inherit" color="error" textAlign="center">{postMsg}</Typography> : null}
+                                {postFileMsg ? <Typography variant="inherit" color="error" textAlign="center">{postFileMsg}</Typography> : null}
                             </Grid2>
                         </Grid2>
                     </Form>
-                </Paper>
+                // </Paper>
             }
         </Formik>
     )
@@ -269,7 +315,6 @@ export async function editUserLoader() {
     }
 
     const user = await getUser(parseInt(userId))
-    console.log(user?.birth_stamp);
 
     return user ? user : redirect("/users");
 }

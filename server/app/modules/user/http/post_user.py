@@ -15,6 +15,7 @@ async def post_user_handler(request: Request):
 
     try:
         dto = PostUserDto.from_dict(await request.json())
+        dto.to_dict()
     except Exception:
         raise HTTPBadRequest()
     

@@ -1,20 +1,28 @@
-import { Button, Grid2, Paper, useTheme } from "@mui/material";
+import { Card, CardActionArea, CardContent, Grid2, Paper, Typography } from "@mui/material";
 import { GetShortUserDto } from "../dto/user";
 import { ProfilePicture } from "./ProfilePicture";
 
 export function UserFrame(data: GetShortUserDto) {
     return (
-        <Paper elevation={3} style={{ padding: "10px", justifyContent: "center" }} sx={{ width: { xs: "40%", md: "30%", lg: "20%" } }} key={data.id}>
-            <Grid2 container size={12} direction="row" spacing={2} justifyContent="center" style={{ height: '100%', width: '100%' }} alignItems="stretch">
-                <Grid2 size={6} justifyItems="center" justifyContent="flex-end">
-                    <ProfilePicture userId={data.id} hasAvatar={data.has_avatar} />
-                    {data.orientation ? <p>{data.orientation}</p> : null}
-                    <p>Курс: {data.year_of_study}</p>
-                </Grid2>
-                <Grid2 size={6} justifyItems="center" justifyContent="flex-start">
-                    <Button fullWidth sx={{ height: "90%" }} variant="contained" href={`/users/${data.id}`}>{data.first_name} {data.last_name}</Button>
-                </Grid2>
-            </Grid2>
-        </Paper>
+        <Card elevation={0} sx={{ width: { xs: "40%", md: "30%", lg: "20%" }, borderRadius: {xs: 5, md: 10, lg: 15}, padding: "10px", justifyContent: "center" }} key={data.id}>
+            <CardActionArea>
+                <CardContent onClick={() => window.location.assign(`/users/${data.id}`)}>
+                    <Grid2 container columns={3} spacing={2} textAlign="center" justifyContent="center" style={{ height: '100%', width: '100%' }} alignItems="center" justifyItems="center" alignContent="center">
+                        <Grid2 size={3}>
+                            <ProfilePicture userId={data.id} hasAvatar={data.has_avatar} />
+                        </Grid2>
+                        {/* <Paper elevation={10} sx={{ borderRadius: 12, width: "100%", height: "100%", backgroundColor: "darkviolet"}}> */}
+                            <Grid2 size={3}>
+                                <Typography textAlign="center" fontSize={{ lg: 24, md: 24, xs: 10 }} noWrap>{data.last_name} {data.first_name}</Typography>
+                            </Grid2>
+                            <Grid2 size={3} textAlign="center">
+                                {<p>{data.orientation ? data.orientation : null}</p>}
+                                <p>{data.year_of_study} курс</p>
+                            </Grid2>
+                        {/* </Paper> */}
+                    </Grid2>
+                </CardContent>
+            </CardActionArea>
+        </Card>
     )
 }

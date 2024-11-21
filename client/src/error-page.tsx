@@ -1,4 +1,3 @@
-import { AxiosError } from "axios";
 import { useEffect } from "react";
 import { useNavigate, useRouteError } from "react-router-dom";
 

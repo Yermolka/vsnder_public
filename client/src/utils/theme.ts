@@ -4,22 +4,27 @@ export const themeOptions: ThemeOptions = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: '#9c27b0',
-      contrastText: '#e1bee7',
+      main: '#2f2f2f',
+      contrastText: '#ffffff',
     },
     secondary: {
       main: '#ffffff',
+      contrastText: '#ffffff',
     },
     background: {
-      default: '#4A148C',
-      paper: '#6A1B9A',
+      default: '#2f2f2f',
+      paper: '#2f2f2f',
     },
     text: {
-      primary: '#e4dfdf',
-      secondary: 'rgba(195,184,184,0.6)',
+      primary: '#ffffff',
+      secondary: '#ffffff',
+      disabled: '#ffffff',
     },
     error: {
         main: '#E57373',
+    },
+    info: {
+        main: '#ffffff',
     }
   },
 });
