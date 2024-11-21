@@ -7,6 +7,7 @@ import { LoginPage } from "../routes/loginPage";
 import { Logout } from "../routes/logout";
 import { ListUsers } from "../routes/listUsers";
 import { ChangePassword } from "../routes/changePassword";
+import { ViewMessages } from "../routes/viewMessages";
 
 export const RootRouter = () => {
     const router = createBrowserRouter([
@@ -48,6 +49,10 @@ export const RootRouter = () => {
                         path: 'roulette',
                         element: <SingleUser />,
                         loader: singleUserRouletteLoader,
+                    },
+                    {
+                        path: 'messages',
+                        element: <ViewMessages />,
                     }
                 ]
                 }

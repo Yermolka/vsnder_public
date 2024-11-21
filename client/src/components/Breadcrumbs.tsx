@@ -1,6 +1,6 @@
 import { Breadcrumbs, Chip, emphasize, Link, styled } from "@mui/material";
 import HomeIcon from '@mui/icons-material/Home';
-import { Edit, Whatshot, Lock, Casino, ExitToApp } from "@mui/icons-material";
+import { Edit, Whatshot, Lock, Casino, ExitToApp, Mail } from "@mui/icons-material";
 
 
 const breadcrumbToLink = [
@@ -8,6 +8,7 @@ const breadcrumbToLink = [
     { name: "Редактировать себя", href: "/edit", icon: <Edit /> },
     { name: "Изменить пароль", href: "/changePassword", icon: <Lock /> },
     { name: "Крутануть рулетку!", href: "/roulette", icon: <Casino /> },
+    { name: "Посмотреть сообщения", href: "/messages", icon: <Mail /> },
     { name: "Выйти", href: "/logout", icon: <ExitToApp /> },
 ];
 

@@ -6,7 +6,7 @@ export function FullUserFrame(data: GetUserDto) {
     const notAvailable = "Не указано"
 
     return (
-        <Paper elevation={3} style={{ padding: "25px", margin: "10px" }}>
+        // <Paper elevation={3} style={{ padding: "25px", margin: "10px" }}>
             <Grid2 container alignItems="stretch" justifyContent="center" spacing={2} columns={{ md: 6, xs: 3 }}>
                 <Grid2 size={3} justifyItems="center" justifyContent="center" alignContent="center" alignItems="center">
                     <Typography>{data.orientation}, {data.year_of_study} курс</Typography>
@@ -53,6 +53,6 @@ export function FullUserFrame(data: GetUserDto) {
                     <Typography>Статус?: {data.status || notAvailable}</Typography>
                 </Grid2>
             </Grid2>
-        </Paper>
+        // </Paper>
     )
 }
