@@ -14,6 +14,7 @@ async def get_users_page_handler(request: Request):
     orientation = get_str_query_param(request, "orientation", None, False)
     year_of_study = get_int_query_param(request, "year_of_study", None, False)
     status = get_str_query_param(request, "status", None, False)
+    query = get_str_query_param(request, "query", None, False)
 
     if page < 1:
         page = 1
@@ -37,7 +38,7 @@ async def get_users_page_handler(request: Request):
     if status is not None and status not in ["Замужем/Женат", "В отношениях", "Схожу на свидание", "Чиллю соло"]:
         status = None
 
-    total, users = await get_users_page(page, limit, order_by, orientation, year_of_study, status)
+    total, users = await get_users_page(page, limit, order_by, orientation, year_of_study, status, query)
 
     return json_response(
         {

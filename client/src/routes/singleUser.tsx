@@ -19,12 +19,12 @@ export function SingleUser() {
     }, [user, userId])
 
     return (
-        <>
+        <div style={{alignContent: "center", alignItems: "center", justifyContent: "center", justifyItems: "center"}}>
             {user ? <h1 style={{ textAlign: "center" }}>{user.first_name} {user.last_name}</h1> : null}
-            {user && user.first_name && user.birth_stamp && user.birth_city ? <Link to={createCultUrl(user)} target="_blank" rel="noreferrer"><Button fullWidth variant="contained" size="large">НАТАЛЬНАЯ КАРТА</Button></Link> : null}
+            {user && user.birth_stamp && user.birth_city ? <Link to={createCultUrl(user)} target="_blank" rel="noreferrer"><Button fullWidth variant="contained" size="large">НАТАЛЬНАЯ КАРТА</Button></Link> : null}
             {user ? (FullUserFrame(user)) : <h1>No user</h1>}
             {user ? (AnonMessageForm(user.id)) : null}
-        </>
+        </div>
     );
 }
 

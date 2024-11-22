@@ -10,9 +10,9 @@ import { AxiosError } from "axios";
 
 export function ListUsers() {
     const navigate = useNavigate();
-    const loader = async (page: number, orderBy: string, orientation: string, yearOfStudy: number, status: string) => {
+    const loader = async (page: number, orderBy: string, orientation: string, yearOfStudy: number, status: string, query: string) => {
         try {
-            return await getUsers(page, 32, orderBy, orientation, yearOfStudy, status);
+            return await getUsers(page, 32, orderBy, orientation, yearOfStudy, status, query);
         } catch (e: any) {
             setError(401);
             return { total: 0, users: [] };
@@ -28,9 +28,11 @@ export function ListUsers() {
     const [orientation, setOrientation] = useState<string>("any");
     const [yearOfStudy, setYearOfStudy] = useState<number>(-1);
     const [status, setStatus] = useState<string>("any");
+    const [query, setQuery] = useState<string>("");
+    const [debouncedQuery, setDebouncedQuery] = useState<string>("");
 
     const loadMore = async () => {
-        const {total, users } = await loader(page, orderBy, orientation, yearOfStudy, status);
+        const {total, users } = await loader(page, orderBy, orientation, yearOfStudy, status, debouncedQuery);
         setLoadedUsers([...loadedUsers, ...users]);
         if (users.length === 0 || users.length === total) {
             setFinished(true);
@@ -46,7 +48,14 @@ export function ListUsers() {
     }, [error]);
 
     useEffect(() => {
-        loader(page, orderBy, orientation, yearOfStudy, status).then(({ total, users }) => {
+        const timeoutQuery = setTimeout(() => {
+            setDebouncedQuery(query);
+        }, 500);
+        return () => clearTimeout(timeoutQuery);
+    }, [query, 500]);
+
+    useEffect(() => {
+        loader(page, orderBy, orientation, yearOfStudy, status, debouncedQuery).then(({ total, users }) => {
             setTotal(total);
             setLoadedUsers(users);
             setPage(page + 1);
@@ -61,7 +70,7 @@ export function ListUsers() {
         setTotal(0);
         setLoadedUsers([]);
         setFinished(false);
-        loader(1, orderBy, orientation, yearOfStudy, status).then(({ total, users }) => {
+        loader(1, orderBy, orientation, yearOfStudy, status, debouncedQuery).then(({ total, users }) => {
             setTotal(total);
             setLoadedUsers(users);
             setPage(2);
@@ -69,7 +78,7 @@ export function ListUsers() {
                 setFinished(true);
             }
         })
-    }, [orderBy, orientation, yearOfStudy, status])
+    }, [orderBy, orientation, yearOfStudy, status, debouncedQuery])
 
     const inputSxProps = {
         "& .MuiOutlinedInput-root": {
@@ -91,7 +100,7 @@ export function ListUsers() {
 
     return (
         <Box width="100%" alignContent="center" alignItems="center" justifyContent="center" justifyItems="center" >
-            <Grid2 container width="80%" display="flex" flexDirection="row" spacing={2} columns={{lg: 4, md: 2, xs: 1}} paddingBottom={1}>
+            <Grid2 alignItems="center" alignContent="center" justifyItems="center" justifyContent="center" container width="80%" spacing={2} columns={{lg: 4, md: 2, xs: 1}} paddingBottom={1} paddingLeft={5} paddingRight={5}>
                 <Grid2 size={1}>
                     <TextField
                         name="select-order-by"
@@ -156,6 +165,21 @@ export function ListUsers() {
                         <MenuItem value="Схожу на свидание">Схожу на свидание</MenuItem>
                         <MenuItem value="Чиллю соло">Чиллю соло</MenuItem>
                     </TextField>
+                </Grid2>
+                <Grid2 size={{lg: 4, md: 2, xs: 1}}>
+                    <TextField
+                        name="search-query"
+                        label="Поиск"
+                        value={query}
+                        onChange={(e) => {
+                            if (e.target.value.length >= 128) {
+                                setQuery("")
+                            } else {
+                                setQuery(e.target.value) 
+                            }
+                        }}
+                        sx={inputSxProps}
+                        fullWidth />
                 </Grid2>
             </Grid2>
             <Divider variant="middle" flexItem />

@@ -1,19 +1,16 @@
-import { Divider, Grid2, Paper, Typography } from "@mui/material";
+import { Grid2, Typography } from "@mui/material";
 import { GetUserDto } from "../dto/user";
 import { ProfilePicture } from "./ProfilePicture";
 import { FullUserOneLine } from "./FullUserOneLine";
 
 export function FullUserFrame(data: GetUserDto) {
-    const notAvailable = "Не указано"
-
     return (
-        <Grid2 container alignItems="center" alignContent="center" justifyItems="center" justifyContent="center" spacing={2} columns={6} width={{lg: "50%", md: "70%", xs: "90%"}}>
+        <Grid2 container alignItems="center" alignContent="center" justifyItems="center" justifyContent="center" spacing={2} columns={6} width={{lg: "50%", md: "70%", xs: "100%"}} padding={2}>
             <Grid2 size={6} justifyItems="center" justifyContent="center" alignContent="center" alignItems="center">
                 <ProfilePicture userId={data.id} hasAvatar={data.has_avatar} />
             </Grid2>
-            <Grid2 size={6} justifyItems="center" justifyContent="center" alignContent="center" alignItems="center">
-                <Typography>{data.orientation ? data.orientation + "," : null} {data.year_of_study} курс</Typography>
-            </Grid2>
+            <FullUserOneLine name="Курс" value={data.year_of_study} />
+            <FullUserOneLine name="Направление" value={data.orientation} />
             <FullUserOneLine name="Семейное положение" value={data.status} />
             <FullUserOneLine name="Возраст" value={data.age} />
             <FullUserOneLine name="Взгляды на семью" value={data.family_opinion} />

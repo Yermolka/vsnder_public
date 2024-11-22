@@ -4,7 +4,7 @@ export function FullUserOneLine(props: {name: string, value: number | string | u
     return (
         <>
             <Grid2 size={3}>
-                <Typography>{props.name}:</Typography>
+                <Typography paddingLeft={5}>{props.name}:</Typography>
             </Grid2>
             <Grid2 size={3}>
                 <Typography>{props.value || "Не указано"}</Typography>

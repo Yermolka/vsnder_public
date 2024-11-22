@@ -33,6 +33,10 @@ WHERE (
 ) AND (
     "status" LIKE %(status)s
     OR %(status)s IS NULL
+) AND (
+    CONCAT("first_name", ' ', "last_name") ILIKE %(q)s
+    OR CONCAT("last_name", ' ', "first_name") ILIKE %(q)s
+    OR %(q)s IS NULL
 );
 """
 
@@ -44,10 +48,11 @@ async def get_users_page(
     orientation: str | None,
     year_of_study: int | None,
     status: str | None,
+    q: str | None,
 ) -> Tuple[int, list[User]]:
     async with get_db_cursor(get_users_page.__name__) as cursor:
         return await _get_users_page(
-            cursor, page, limit, order_by, orientation, year_of_study, status
+            cursor, page, limit, order_by, orientation, year_of_study, status, q
         )
 
 
@@ -59,6 +64,7 @@ async def _get_users_page(
     orientation: str | None,
     year_of_study: int | None,
     status: str | None,
+    q: str | None,
 ) -> Tuple[int, list[User]]:
     if order_by not in [
         "id",
@@ -89,18 +95,22 @@ async def _get_users_page(
     ]:
         status = None
 
+    if q is not None:
+        q = q.strip()
+        if len(q) == 0:
+            q = None
+        else:
+            q = "%" + q + "%"
+
     cursor.row_factory = tuple_row
     await cursor.execute(
         COUNT_USERS,
-        dict(orientation=orientation, year_of_study=year_of_study, status=status),
+        dict(orientation=orientation, year_of_study=year_of_study, status=status, q=q),
     )
     count = (await cursor.fetchone())[0]
 
     if count == 0:
         return 0, []
-
-    # limit = max(1, min(limit, count))
-    # page = max(1, min(page, count // limit + 1))
 
     cursor.row_factory = class_row(User)
     query = sql.SQL(
@@ -116,6 +126,10 @@ async def _get_users_page(
                     ) AND (
                         "status" LIKE {status}
                         OR {status} IS NULL
+                    ) AND """ + """(
+                        CONCAT("first_name", ' ', "last_name") ILIKE {q}
+                        OR CONCAT("last_name", ' ', "first_name") ILIKE {q}
+                        OR {q} IS NULL
                     )
                     """
         + """ORDER BY {order_by} ASC """
@@ -127,9 +141,10 @@ async def _get_users_page(
             orientation=orientation,
             year_of_study=year_of_study,
             status=status,
+            q=q,
             limit=limit,
             offset=limit * (page - 1),
-        )
+        ),
     )
     result = await cursor.fetchall()
 

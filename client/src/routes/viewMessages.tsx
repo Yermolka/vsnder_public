@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getMessages } from "../api/message";
 import { useNavigate } from "react-router-dom";
+import { Box } from "@mui/material";
 
 export function ViewMessages() {
     const [messages, setMessages] = useState<Array<string>>([]);
@@ -15,8 +16,8 @@ export function ViewMessages() {
     }, [])
 
     return (
-        <>
-        {messages.map((message, index) => { return <p key={index}>{message}</p>})}
-        </>
+        <Box padding={5}>
+            {messages.map((message, index) => { return <p key={index}>{message}</p>})}
+        </Box>
     )
 }

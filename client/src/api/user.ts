@@ -2,7 +2,7 @@ import { ax } from "../utils/axios";
 import { GetShortUserDto, GetUserDto, PostUserDto, UserChangePasswordDto } from "../dto/user"
 import { AxiosError } from "axios";
 
-export async function getUsers(page: number, limit: number, orderBy: string, orientation: string, yearOfStudy: number, status: string): Promise<{ total: number, users: Array<GetShortUserDto> }> {
+export async function getUsers(page: number, limit: number, orderBy: string, orientation: string, yearOfStudy: number, status: string, query: string): Promise<{ total: number, users: Array<GetShortUserDto> }> {
     let url = `/users?page=${page}&limit=${limit}&orderBy=${orderBy}`;
     if (orientation !== "any") {
         url += `&orientation=${orientation}`;
@@ -13,13 +13,17 @@ export async function getUsers(page: number, limit: number, orderBy: string, ori
     if (status !== "any") {
         url += `&status=${status}`;
     }
+    if (query !== "") {
+        url += `&query=${query}`;
+    }
 
     return await ax.get(url)
         .then(res => {
             const { total, users }: { total: number, users: Array<GetShortUserDto> } = res.data;
             return { total, users };
         }, (err: AxiosError) => {
-            throw err;
+            if (err?.status === 401) { throw err }
+            return { total: 0, users: [] };
         });
 }
 

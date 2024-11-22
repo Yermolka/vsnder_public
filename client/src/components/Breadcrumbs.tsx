@@ -14,36 +14,36 @@ const breadcrumbToLink = [
 
 const StyledBreadcrumb = styled(Chip)(({ theme }) => {
     const backgroundColor =
-      emphasize(theme.palette.primary.main, 0.01);
+        emphasize(theme.palette.primary.main, 0.01);
     return {
-      backgroundColor,
-      height: theme.spacing(3),
-      color: theme.palette.text.primary,
-      fontWeight: theme.typography.fontWeightRegular,
-      '&:hover, &:focus': {
-        backgroundColor: emphasize(backgroundColor, 0.20),
-      },
-      '&:active': {
-        boxShadow: theme.shadows[1],
-        backgroundColor: emphasize(backgroundColor, 0.12),
-      },
+        backgroundColor,
+        height: theme.spacing(3),
+        color: theme.palette.text.primary,
+        fontWeight: theme.typography.fontWeightRegular,
+        '&:hover, &:focus': {
+            backgroundColor: emphasize(backgroundColor, 0.20),
+        },
+        '&:active': {
+            boxShadow: theme.shadows[1],
+            backgroundColor: emphasize(backgroundColor, 0.12),
+        },
     };
-  }) as typeof Chip;
+}) as typeof Chip;
 
 export function VSNBreadcrumbs() {
     return (
-        <Breadcrumbs>
+        <Breadcrumbs sx={{ padding: 1,  }}>
             {
                 breadcrumbToLink.map(({ name, href, icon }) => {
                     return (
-                            <StyledBreadcrumb 
+                        <StyledBreadcrumb
                             key={name}
                             component="a"
                             href={href}
                             label={name}
                             icon={icon}
-                            />
-                        );
+                        />
+                    );
                 })
             }
         </Breadcrumbs>
