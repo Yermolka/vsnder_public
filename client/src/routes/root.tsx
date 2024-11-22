@@ -1,5 +1,5 @@
 import { Outlet, useMatch, useNavigate, useNavigation } from "react-router-dom";
-import { Box, Skeleton } from "@mui/material";
+import { Box, Divider, Skeleton, Typography } from "@mui/material";
 import { useEffect } from "react";
 import { VSNBreadcrumbs } from "../components/Breadcrumbs";
 import { ErrorBoundary } from "react-error-boundary";
@@ -18,7 +18,7 @@ export default function Root() {
             } else {
                 return navigate('/users');
             };
-        } 
+        }
     }, [appMatch]);
 
     return (
@@ -26,9 +26,11 @@ export default function Root() {
             <div className="div-header">
                 {userId === null ? "" : <VSNBreadcrumbs />}
                 <h1>VSNder</h1>
+                <Typography fontSize={10}>By @goffkir @YermolGG @ignisiris @tupoygleb @n1kon0ff</Typography>
+                <Divider variant="middle" sx={{ paddingTop: 2 }} />
             </div>
-            {navigation.state === "loading" ? <Skeleton /> : null }
-            
+            {navigation.state === "loading" ? <Skeleton /> : null}
+
             <div id="detail">
                 <Box width="100vw" alignContent="center" justifyContent="center" alignItems="center" justifyItems="center">
                     <Outlet />

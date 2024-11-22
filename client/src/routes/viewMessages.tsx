@@ -19,7 +19,7 @@ export function ViewMessages() {
 
     const btnHandler = (id: number) => {
         deleteMessage(id).then((value) => {
-            setMessages(messages.filter((value, index, array) => value.id != id));
+            setMessages(messages.filter((value, index, array) => value.id !== id));
         })
     }
 
