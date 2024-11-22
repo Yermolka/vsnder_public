@@ -1,58 +1,34 @@
 import { Divider, Grid2, Paper, Typography } from "@mui/material";
 import { GetUserDto } from "../dto/user";
 import { ProfilePicture } from "./ProfilePicture";
+import { FullUserOneLine } from "./FullUserOneLine";
 
 export function FullUserFrame(data: GetUserDto) {
     const notAvailable = "Не указано"
 
     return (
-        // <Paper elevation={3} style={{ padding: "25px", margin: "10px" }}>
-            <Grid2 container alignItems="stretch" justifyContent="center" spacing={2} columns={{ md: 6, xs: 3 }}>
-                <Grid2 size={3} justifyItems="center" justifyContent="center" alignContent="center" alignItems="center">
-                    <Typography>{data.orientation}, {data.year_of_study} курс</Typography>
-                </Grid2>
-                <Grid2 size={3} justifyItems="center" justifyContent="center" alignContent="center" alignItems="center">
-                    <ProfilePicture userId={data.id} hasAvatar={data.has_avatar} />
-                </Grid2>
-                <Grid2 size={3} justifyItems="center" justifyContent="center" alignContent="center" alignItems="center">
-                    <Typography>Возраст: {data.age || notAvailable}</Typography>
-                </Grid2>
-                <Grid2 size={3} justifyItems="center" justifyContent="center" alignContent="center" alignItems="center">
-                    <Typography>Интересы: {data.interests || notAvailable}</Typography>
-                    <Divider />
-                    <Typography>Интересы на ВСН: {data.vsn_interests || notAvailable}</Typography>
-                </Grid2>
-                <Grid2 size={3} justifyItems="center" justifyContent="center" alignContent="center" alignItems="center">
-                    <Typography>Любимые места поботать: {data.study_places || notAvailable}</Typography>
-                    <Divider />
-                    <Typography>Места, где хотелось бы побывать: {data.places_to_visit || notAvailable}</Typography>
-                </Grid2>
-                <Grid2 size={3} justifyItems="center" justifyContent="center" alignContent="center" alignItems="center">
-                    <Typography>Любимая музыка: {data.music || notAvailable}</Typography>
-                    <Divider />
-                    <Typography>Любимые фильмы: {data.favorite_movies || notAvailable}</Typography>
-                </Grid2>
-                <Grid2 size={3} justifyItems="center" justifyContent="center" alignContent="center" alignItems="center">
-                    <Typography>Религия: {data.religion || notAvailable}</Typography>
-                    <Divider />
-                    <Typography>Планы на будущее: {data.future_plans || notAvailable}</Typography>
-                </Grid2>
-                <Grid2 size={3} justifyItems="center" justifyContent="center" alignContent="center" alignItems="center">
-                    <Typography>Взгляды на семью: {data.family_opinion || notAvailable}</Typography>
-                    <Divider />
-                    <Typography>Любимый ЯП: {data.favorite_programming_language || notAvailable}</Typography>
-                </Grid2>
-                <Grid2 size={3} justifyItems="center" justifyContent="center" alignContent="center" alignItems="center">
-                    <Typography>Отношение к курению: {data.smoking || notAvailable}</Typography>
-                    <Divider />
-                    <Typography>Отношение к алкоголю: {data.drinking || notAvailable}</Typography>
-                </Grid2>
-                <Grid2 size={3} justifyItems="center" justifyContent="center" alignContent="center" alignItems="center">
-                    <Typography>3 кумира: {data.top_3_people || notAvailable}</Typography>
-                    <Divider />
-                    <Typography>Статус?: {data.status || notAvailable}</Typography>
-                </Grid2>
+        <Grid2 container alignItems="center" alignContent="center" justifyItems="center" justifyContent="center" spacing={2} columns={6} width={{lg: "50%", md: "70%", xs: "90%"}}>
+            <Grid2 size={6} justifyItems="center" justifyContent="center" alignContent="center" alignItems="center">
+                <ProfilePicture userId={data.id} hasAvatar={data.has_avatar} />
             </Grid2>
-        // </Paper>
+            <Grid2 size={6} justifyItems="center" justifyContent="center" alignContent="center" alignItems="center">
+                <Typography>{data.orientation ? data.orientation + "," : null} {data.year_of_study} курс</Typography>
+            </Grid2>
+            <FullUserOneLine name="Семейное положение" value={data.status} />
+            <FullUserOneLine name="Возраст" value={data.age} />
+            <FullUserOneLine name="Взгляды на семью" value={data.family_opinion} />
+            <FullUserOneLine name="Отношение к курению" value={data.smoking} />
+            <FullUserOneLine name="Отношение к алкоголю" value={data.drinking} />
+            <FullUserOneLine name="Интересы" value={data.interests} />
+            <FullUserOneLine name="Интересы на ВСН" value={data.vsn_interests} />
+            <FullUserOneLine name="Любимые места поботать" value={data.study_places} />
+            <FullUserOneLine name="Места, где хотелось бы побывать" value={data.places_to_visit} />
+            <FullUserOneLine name="Любимая музыка" value={data.music} />
+            <FullUserOneLine name="Любимые фильмы" value={data.favorite_movies} />
+            <FullUserOneLine name="Религия" value={data.religion} />
+            <FullUserOneLine name="Планы на будущее" value={data.future_plans} />
+            <FullUserOneLine name="Любимый ЯП" value={data.favorite_programming_language} />
+            <FullUserOneLine name="3 кумира" value={data.top_3_people} />
+        </Grid2>
     )
 }

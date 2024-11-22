@@ -28,18 +28,40 @@ export function AnonMessageForm(receiver_id: number) {
         }}>
             {props => 
             <Form>
-                <Grid2>
-                    <TextField 
-                    multiline
-                    rows={4}
-                    name="text"
-                    label="Оставить анонимное сообщение"
-                    value={props.values.text}
-                    error={Boolean(props.errors.text)}
-                    helperText={props.errors.text} 
-                    onChange={props.handleChange}/>
-                    <Button type="submit" variant="contained">Отправить</Button>
-                    {formText && <p>{formText}</p> }
+                <Grid2 container columns={1} spacing={2} alignContent="center" alignItems="center" justifyContent="center" justifyItems="center">
+                    <Grid2 size={1}>
+                        <TextField 
+                        multiline
+                        rows={4}
+                        name="text"
+                        label="Оставить анонимное сообщение"
+                        value={props.values.text}
+                        error={Boolean(props.errors.text)}
+                        helperText={props.errors.text} 
+                        onChange={props.handleChange}
+                        sx={{
+                            "& .MuiOutlinedInput-root": {
+                                color: "#fff",
+                                "&.Mui-focused": {
+                                    "& .MuiOutlinedInput-notchedOutline": {
+                                        borderColor: "#fff",
+                                        borderWidth: "2px",
+                                    },
+                                },
+                            },
+                            "& .MuiInputLabel-outlined": {
+                                color: "#fff",
+                                "&.Mui-focused": {
+                                    color: "#fff",
+                                }
+                            }
+                        }} 
+                        fullWidth/>
+                    </Grid2>
+                    <Grid2 size={1}>
+                        <Button fullWidth type="submit" variant="contained">Отправить</Button>
+                        {formText && <p>{formText}</p> }
+                    </Grid2>
                 </Grid2>
             </Form>
             }
