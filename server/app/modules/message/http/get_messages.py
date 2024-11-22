@@ -17,4 +17,4 @@ async def get_messages_handler(request: Request):
 
     messages = await get_messages_for_user_by_id(receiver_id)
 
-    return json_response(messages)
+    return json_response([{"id": message[0], "text": message[1]} for message in messages])
