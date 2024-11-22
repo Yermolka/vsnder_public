@@ -4,23 +4,6 @@ from psycopg import AsyncCursor, sql
 from db import get_db_cursor
 from models.user import User
 
-SELECT_USERS = """
-SELECT * 
-FROM "user"
-WHERE (
-    "orientation" LIKE %(orientation)s
-    OR %(orientation)s IS NULL
-) AND (
-    "year_of_study" = %(year_of_study)s
-    OR %(year_of_study)s IS NULL
-) AND (
-    "status" LIKE %(status)s
-    OR %(status)s IS NULL
-)
-ORDER BY %(order_by)s ASC
-LIMIT %(limit)s OFFSET %(offset)s;
-"""
-
 COUNT_USERS = """
 SELECT COUNT(*)
 FROM "user"
@@ -73,8 +56,8 @@ async def _get_users_page(
         "age",
         "orientation",
         "year_of_study",
-    ]:
-        order_by = "id"
+    ] or order_by == "id":
+        order_by = "modified"
 
     if orientation is not None and orientation not in [
         "Психология",
@@ -132,7 +115,7 @@ async def _get_users_page(
                         OR {q} IS NULL
                     )
                     """
-        + """ORDER BY {order_by} ASC """
+        + """ORDER BY {order_by} """ + f"""{"ASC" if order_by != "modified" else "DESC"} """
         + "LIMIT {limit} OFFSET {offset};"
     )
     await cursor.execute(

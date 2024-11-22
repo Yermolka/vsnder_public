@@ -26,8 +26,8 @@ async def get_users_page_handler(request: Request):
         "age",
         "orientation",
         "year_of_study",
-    ]:
-        order_by = "id"
+    ] or order_by == "id":
+        order_by = "modified"
 
     if orientation is not None and orientation not in ["Психология", "Социология", "Политология", "ГМУ"]:
         orientation = None

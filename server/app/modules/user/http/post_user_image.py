@@ -6,6 +6,7 @@ from aiohttp.web_exceptions import HTTPBadRequest
 from common.utils.auth import auth_guard
 from common.consts import USER_SESSION_USER_ID_KEY
 from modules.user.core.commands.set_user_image_by_id import set_user_image_by_user_id
+from modules.user.core.commands.create_log_entry import create_log_entry
 from PIL import ImageFile
 
 img_types = {
@@ -51,5 +52,7 @@ async def post_user_image_handler(request: Request):
     
     except Exception as e:
         raise HTTPBadRequest(reason=str(e))
+    
+    await create_log_entry(user_id, "image_upload")
 
     return json_response(data={"user_id": user_id})

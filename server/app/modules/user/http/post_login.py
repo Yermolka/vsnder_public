@@ -5,6 +5,7 @@ from aiohttp.web_exceptions import HTTPUnauthorized
 from common.consts import USER_SESSION_USER_ID_KEY
 from dto.auth import PostAuthDto
 from modules.user.core.utils.auth_by_password import auth_by_password
+from modules.user.core.commands.create_log_entry import create_log_entry
 
 
 async def user_login_handler(request: Request):
@@ -22,5 +23,7 @@ async def user_login_handler(request: Request):
         session.changed()
     except Exception as e:
         raise HTTPUnauthorized(text=str(e))
+    
+    await create_log_entry(user.id, "login")
 
     return json_response({"userId": user.id})
