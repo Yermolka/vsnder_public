@@ -1,4 +1,4 @@
-import { Grid2, Typography } from "@mui/material";
+import { Grid2 } from "@mui/material";
 import { GetUserDto } from "../dto/user";
 import { ProfilePicture } from "./ProfilePicture";
 import { FullUserOneLine } from "./FullUserOneLine";

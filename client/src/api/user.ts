@@ -42,11 +42,6 @@ export async function postUserChangePassword(data: UserChangePasswordDto): Promi
         .then(res => { return null; }, (err: AxiosError) => { return err.response?.data as string || null; });
 }
 
-export async function getHasUserProfilePicture(userId: number) {
-    return await ax.get(`/users/${userId}/file/has`)
-        .then(res => { return true; }, err => { return false; });
-}
-
 export async function postUserImage(userId: number, file: File | null): Promise<string | null> {
     if (!file) {
         return null;
@@ -55,7 +50,7 @@ export async function postUserImage(userId: number, file: File | null): Promise<
     const data = new FormData();
     data.append("img", file);
     return await ax.post(`/users/${userId}/file`, data)
-        .then(res => { return null; }, (err: AxiosError) => { return err.response?.data as string || null; });
+        .then(res => { return null; }, (err: AxiosError) => { return "Ошибка при загрузке аватарки"; });
 }
 
 export async function getRandomUser(): Promise<GetUserDto> {
