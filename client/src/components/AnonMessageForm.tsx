@@ -19,10 +19,10 @@ export function AnonMessageForm(receiver_id: number) {
         <Formik 
         initialValues={initialValues} 
         validationSchema={validationSchema}
-        onSubmit={(values: {text: string}, { setSubmitting }) => {
-            console.log(values.text);
+        onSubmit={(values: {text: string}, { setSubmitting, resetForm }) => {
             postMessage(receiver_id, values.text).then(() => {
                 setFormText("Отправлено!");
+                resetForm();
             })
             setSubmitting(false);
         }}>
@@ -38,7 +38,9 @@ export function AnonMessageForm(receiver_id: number) {
                         value={props.values.text}
                         error={Boolean(props.errors.text)}
                         helperText={props.errors.text} 
-                        onChange={props.handleChange}
+                        onChange={(e) => {
+                            props.handleChange(e);
+                        }}
                         sx={{
                             "& .MuiOutlinedInput-root": {
                                 color: "#fff",

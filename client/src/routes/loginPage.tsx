@@ -7,6 +7,24 @@ import { Formik, Form } from "formik";
 
 export function LoginPage() {
     const navigate = useNavigate();
+
+    const inputSxProps = {
+        "& .MuiOutlinedInput-root": {
+            color: "#fff",
+            "&.Mui-focused": {
+                "& .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#fff",
+                    borderWidth: "2px",
+                },
+            },
+        },
+        "& .MuiInputLabel-outlined": {
+            color: "#fff",
+            "&.Mui-focused": {
+                color: "#fff",
+            }
+        }
+    }
     
     return (
         <Formik
@@ -22,10 +40,10 @@ export function LoginPage() {
                             <h1>Войти</h1>
                         </Grid2>
                         <Grid2 size={12}>
-                            <TextField name='username' label='Логин' value={props.values.username} onChange={props.handleChange} />
+                            <TextField name='username' label='Логин' value={props.values.username} onChange={props.handleChange} sx={inputSxProps} />
                         </Grid2>
                         <Grid2 size={12}>
-                            <TextField name='password' type='password' label='Пароль' value={props.values.password} onChange={props.handleChange}/>
+                            <TextField name='password' type='password' label='Пароль' value={props.values.password} onChange={props.handleChange} sx={inputSxProps} />
                         </Grid2>
                         <Grid2 size={12}>
                             <Button type='submit' variant="contained" disabled={props.isSubmitting}>Войти</Button>
