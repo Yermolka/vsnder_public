@@ -104,5 +104,5 @@ class PostUserDto(DtoBase):
     smoking: Literal["Положительно", "Отрицательно", "Нейтрально"] | None = field(metadata={"deserialize": lambda x: x or None })
     top_3_people: str | None = field(metadata={"deserialize": lambda x: x or None })
     drinking: Literal["Положительно", "Отрицательно", "Нейтрально"] | None = field(metadata={"deserialize": lambda x: x or None })
-    birth_stamp: datetime | None = field(metadata={"deserialize": lambda x: datetime.fromisoformat(x) if x is not None else None })
+    birth_stamp: datetime | None = field(metadata={"deserialize": lambda x: datetime.fromisoformat(x) if x else None })
     birth_city: str | None = field(metadata={"deserialize": lambda x: x or None })
