@@ -57,3 +57,17 @@ export async function getRandomUser(): Promise<GetUserDto> {
     return await ax.get('/user/random')
         .then(res => { return res.data }, (err: AxiosError) => { return err.response?.data; });
 }
+
+export async function getCoords(city: string): Promise<{ lat: number, lng: number }> {
+    return await ax.get(`http://api.geonames.org/searchJSON?q=${city}&maxRows=1&username=yermolgg`)
+        .then(res => {
+            console.log(res.data);
+            if (res.data.geonames) {
+                const lng = res.data.geonames[0].lng;
+                const lat = res.data.geonames[0].lat;
+                return { lat: lat, lng: lng};
+            } else {
+                return { lat: 55.75, lng: 37.61 };
+            }
+        })
+}
