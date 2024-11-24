@@ -49,10 +49,9 @@ async def post_user_image_handler(request: Request):
         img.close()
 
         await set_user_image_by_user_id(user_id, img_bytes.getvalue(), media_type)
-    
+        await create_log_entry(user_id, "image_upload")
+        
     except Exception as e:
         raise HTTPBadRequest(reason=str(e))
-    
-    await create_log_entry(user_id, "image_upload")
 
     return json_response(data={"user_id": user_id})

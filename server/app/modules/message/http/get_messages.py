@@ -17,4 +17,4 @@ async def get_messages_handler(request: Request):
 
     messages = await get_messages_for_user_by_id(receiver_id)
 
-    return json_response([{"id": message[0], "text": message[1]} for message in messages])
+    return json_response([{"id": message[0], "text": message[1], "img_url": (f"/api/messages/{receiver_id}/{message[0]}/file" if message[2] else None)} for message in messages])

@@ -1,29 +1,44 @@
-import { Button, Grid2, TextField } from "@mui/material";
+import { Button, Grid2, Input, TextField } from "@mui/material";
 import { Form, Formik } from "formik";
 import * as yup from "yup";
 import { postMessage } from "../api/message";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 export function AnonMessageForm(receiver_id: number) {
     const [formText, setFormText] = useState<string | null>(null);
+    const [file, setFile] = useState<File | null>(null);
 
     const initialValues = {
         text: '',
     }
 
     const validationSchema = yup.object().shape({
-        text: yup.string().required().max(500),
+        text: yup.string().max(500),
     })
+
+    const handleFile = (file: File | null) => {
+        setFile(file);
+    }
+
+    const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+        if (event.target.files && event.target.files.length > 0) {
+            handleFile(event.target.files[0]);
+        } else {
+            handleFile(null);
+        }
+    }
 
     return (
         <Formik 
         initialValues={initialValues} 
         validationSchema={validationSchema}
         onSubmit={(values: {text: string}, { setSubmitting, resetForm }) => {
-            postMessage(receiver_id, values.text).then(() => {
-                setFormText("Отправлено!");
-                resetForm();
-            })
+            if (values.text.length > 0 || file) {
+                postMessage(receiver_id, values.text, file).then(() => {
+                    resetForm();
+                    handleFile(null);
+                })
+            }
             setSubmitting(false);
         }}>
             {props => 
@@ -59,6 +74,9 @@ export function AnonMessageForm(receiver_id: number) {
                             }
                         }} 
                         fullWidth/>
+                    </Grid2>
+                    <Grid2 size={1}>
+                        <Input type="file" name="img" id="img" onChange={handleFileChange} />
                     </Grid2>
                     <Grid2 size={1}>
                         <Button fullWidth type="submit" variant="contained">Отправить</Button>
