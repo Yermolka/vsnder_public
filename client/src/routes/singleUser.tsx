@@ -1,7 +1,7 @@
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import { GetUserDto } from "../dto/user";
 import { getRandomUser, getUser } from "../api/user";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { FullUserFrame } from "../components/FullUserFrame";
 import dayjs from "dayjs";
 import { Button } from "@mui/material";
@@ -10,16 +10,17 @@ import { AnonMessageForm } from "../components/AnonMessageForm";
 export function SingleUser() {
     const user = useLoaderData() as GetUserDto | null;
     const userId = localStorage.getItem("userId") as string | null;
-    const navigate = useNavigate();
+    const [isSelf, setIsSelf] = useState(false);
 
     useEffect(() => {
         if (user && userId && user.id === parseInt(userId)) {
-            navigate('/edit');
+            setIsSelf(true);
         }
     }, [user, userId])
 
     return (
-        <div style={{alignContent: "center", alignItems: "center", justifyContent: "center", justifyItems: "center"}}>
+        <div style={{ alignContent: "center", alignItems: "center", justifyContent: "center", justifyItems: "center" }}>
+            {isSelf && user ? <Link to={`/edit`}><Button fullWidth variant="contained" size="large">Редактировать</Button></Link> : null}
             {user ? <h1 style={{ textAlign: "center" }}>{user.first_name} {user.last_name}</h1> : null}
             {user && user.birth_stamp && user.birth_city ? <Link to={createCultUrl(user)} target="_blank" rel="noreferrer"><Button fullWidth variant="contained" size="large">НАТАЛЬНАЯ КАРТА</Button></Link> : null}
             {user ? (FullUserFrame(user)) : <h1>No user</h1>}
