@@ -58,7 +58,7 @@ async def post_message_handler(request: Request):
             img.save(img_bytes, format=media_type)
             img.close()
 
-        await create_message(receiver_id, text, img_bytes.getvalue(), media_type)
+        await create_message(receiver_id, text, (img_bytes.getvalue() if img_bytes else None), media_type)
     except Exception as ex:
         return HTTPBadRequest(text=str(ex))
 
