@@ -41,7 +41,7 @@ async def post_message_handler(request: Request):
             if part.name == "file":
                 img_data = await part.read()
             elif part.name == "text":
-                text = await part.read()
+                text = (await part.read()).decode()
         
         if img_data:
             parser.feed(img_data)
