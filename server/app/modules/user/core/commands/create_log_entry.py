@@ -12,11 +12,15 @@ RETURNING "id";
 
 SELECT_LAST_ROW = """
 SELECT "user_id", "data" FROM "analytic_logs"
+WHERE "user_id" = %(user_id)s
 ORDER BY "id" DESC LIMIT 1;
 """
 
 
 async def create_log_entry(user_id: int, data: str) -> int:
+    if data.endswith(str(user_id)):
+        return 0
+    
     async with get_db_cursor() as cursor:
         _user = await _get_user_by_id(cursor, user_id)
 
@@ -26,7 +30,7 @@ async def create_log_entry(user_id: int, data: str) -> int:
 async def _create_log_entry(cursor: AsyncCursor, user_id: int, data: str) -> int:
     cursor.row_factory = tuple_row
 
-    await cursor.execute(SELECT_LAST_ROW)
+    await cursor.execute(SELECT_LAST_ROW, dict(user_id=user_id))
     result = await cursor.fetchone()
 
     if result and result[0] == user_id and result[1] == data:
