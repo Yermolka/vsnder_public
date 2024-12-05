@@ -1,4 +1,4 @@
-FROM mirror.gcr.io/python:3.12
+FROM mirror.gcr.io/python:3.12.6
 
 RUN --mount=type=cache,sharing=locked,target=/usr/local/lib/python3.11/site-packages pip install --no-cache-dir pdm==2.17.3
 

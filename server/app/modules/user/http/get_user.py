@@ -11,6 +11,53 @@ from modules.user.core.commands.create_log_entry import create_log_entry
 
 @auth_guard()
 async def get_user_handler(request: Request):
+    """
+    security:
+        - cookieAuth: []
+    description: Get user's avatar
+    tags:
+        - user
+    parameters:
+        - in: path
+          name: user_id
+          required: true
+          schema:
+            type: integer
+    responses:
+        "200":
+            description: User data
+            content:
+                application/json:
+                    schema:
+                        $ref: "$/components/schemas/GetUserDto"
+        "400":
+            description: List of reasons<br/><br/>
+                - path param user_id is too long<br/>
+                - specify path param user_id<br/>
+            content:
+                text/plain:
+                    schema:
+                        type: string
+        "401":
+            description: Unauthorized
+            content:
+                text/plain:
+                    schema:
+                        type: string
+        "404":
+            description: User not found
+            content:
+                text/plain:
+                    schema:
+                        type: string
+        "500":
+            description: Internal server error
+            content:
+                text/plain:
+                    schema:
+                        type: string
+    """
+
     session = await get_session(request)
     session_user_id = session[USER_SESSION_USER_ID_KEY]
 

@@ -11,6 +11,33 @@ from random import choice
 
 @auth_guard()
 async def get_random_user_handler(request: Request):
+    """
+    security:
+        - cookieAuth: []
+    description: Get a random user
+    tags:
+        - user
+    responses:
+        "200":
+            description: User data
+            content:
+                application/json:
+                    schema:
+                        $ref: "#/components/schemas/GetUserDto"
+        "401":
+            description: Unauthorized
+            content:
+                text/plain:
+                    schema:
+                        type: string
+        "500":
+            description: Internal server error
+            content:
+                text/plain:
+                    schema:
+                        type: string
+    """
+
     session = await get_session(request)
     user_id = session[USER_SESSION_USER_ID_KEY]
 

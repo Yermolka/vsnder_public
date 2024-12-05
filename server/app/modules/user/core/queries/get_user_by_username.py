@@ -1,4 +1,4 @@
-from werkzeug.exceptions import NotFound
+from aiohttp.web_exceptions import HTTPNotFound
 from psycopg.rows import class_row
 from psycopg import AsyncCursor
 from db import get_db_cursor
@@ -23,6 +23,6 @@ async def _get_user_by_username(cursor: AsyncCursor, username: str) -> User:
     result = await cursor.fetchone()
 
     if not result:
-        raise NotFound(f"User {username} not found")
+        raise HTTPNotFound("Пользователь не найден")
     
     return result

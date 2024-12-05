@@ -9,6 +9,45 @@ from modules.user.core.commands.create_log_entry import create_log_entry
 
 
 async def user_login_handler(request: Request):
+    """
+    security:
+        - cookieAuth: []
+    description: Login
+    tags:
+        - user
+        - auth
+    responses:
+        "200":
+            description: ok
+            content:
+                application/json:
+                    schema:
+                        type: object
+                        required:
+                            - userId
+                        properties:
+                            userId:
+                                type: integer
+        "401":
+            description: Unauthorized
+            content:
+                text/plain:
+                    schema:
+                        type: string
+        "404":
+            description: Not found
+            content:
+                text/plain:
+                    schema:
+                        type: string
+        "500":
+            description: Internal server error
+            content:
+                text/plain:
+                    schema:
+                        type: string
+    """
+
     try:
         body = await request.json()
         dto = PostAuthDto.from_dict(body)

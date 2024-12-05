@@ -1,4 +1,4 @@
-from werkzeug.exceptions import NotFound
+from aiohttp.web_exceptions import HTTPNotFound
 from psycopg.rows import tuple_row
 from psycopg import AsyncCursor
 from db import get_db_cursor
@@ -23,6 +23,6 @@ async def _get_user_password_by_id(cursor: AsyncCursor, id: int) -> User:
     result = await cursor.fetchone()
 
     if not result:
-        raise NotFound(f"User {id} not found")
+        raise HTTPNotFound("Пользователь не найден")
     
     return result[0]
