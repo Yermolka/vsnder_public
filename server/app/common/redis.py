@@ -44,7 +44,7 @@ class Redis:
         return await self.redis.ping()
 
 
-REDIS_USERNAME = os.environ.get("REDIS_USERNAME")
+REDIS_USERNAME = os.environ.get("REDIS_USER")
 REDIS_PASSWORD = os.environ.get("REDIS_PASSWORD")
 REDIS_DOMAIN = os.environ.get("REDIS_DOMAIN")
 REDIS_PORT = os.environ.get("REDIS_PORT")

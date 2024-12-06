@@ -6,6 +6,8 @@ from typing import Any, AsyncGenerator
 import os
 from utils.logger import logger
 
+YOYO_CONN_STR = f"postgresql+psycopg://{os.environ["DB_USER"]}:{os.environ["DB_PASSWORD"]}@{os.environ["DB_HOST"]}:5432/{os.environ["DB_DATABASE"]}"
+
 POOL_MIN_CONNS = 5
 POOL_MAX_CONNS = 25
 
