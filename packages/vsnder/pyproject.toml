@@ -1,0 +1,19 @@
+[project]
+name = "vsnder"
+version = "0.1.0"
+description = "Default template for PDM package"
+authors = [
+    {name = "Andrey Yermoshin", email = "ermoshin.andrey2@wb.ru"},
+]
+dependencies = ["mashumaro>=3.15"]
+requires-python = ">=3.12"
+readme = "README.md"
+license = {text = "None"}
+
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+
+[tool.pdm]
+distribution = true

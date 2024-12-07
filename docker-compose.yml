@@ -4,34 +4,33 @@ services:
   proxy:
     depends_on:
       - client
+      - server
     build:
-      context: proxy
-      dockerfile: ./Dockerfile
+      context: .
+      dockerfile: ./services/proxy/Dockerfile
     ports:
       - "80:80"
       - "6379:6379"
       - "5432:5432"
 
   client:
-    depends_on:
-      - server
     build:
-      context: client
-      dockerfile: ./Dockerfile
+      context: .
+      dockerfile: ./services/client/Dockerfile
     volumes:
-      - ./client/src:/vsnder/client/src
+      - ./services/client/src:/vsnder/client/src
     
   server:
     depends_on:
       - redis
     build:
-      context: server
-      dockerfile: ./Dockerfile
+      context: .
+      dockerfile: ./services/server/Dockerfile
     volumes:
-      - ./server/app:/vsnder/server/app
-      - ./server/pyproject.toml:/vsnder/server/pyproject.toml
+      - ./services/server/app:/vsnder/server/app
+      - ./services/server/pyproject.toml:/vsnder/server/pyproject.toml
     env_file:
-      - "./server/db.env"
+      - "./services/server/db.env"
     ports:
       - "35600:35600"
 

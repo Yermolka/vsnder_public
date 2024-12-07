@@ -1,0 +1,8 @@
+ALTER TABLE "message"
+ADD COLUMN "answer_text" VARCHAR;
+
+ALTER TABLE "message"
+ADD COLUMN "answer_file_id" INT REFERENCES "file" ON DELETE SET NULL;
+
+ALTER TABLE "message"
+ADD COLUMN "public" BOOLEAN DEFAULT FALSE;
